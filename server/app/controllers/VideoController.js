@@ -1,10 +1,12 @@
-const Videos = require('../models/ResultSummarization')
+const ResultSummarization = require('../models/ResultSummarization')
+const NoiseReduction = require('../models/NoiseReduction')
 
 class VideoController{
+    // [GET] localhost:5000/video
     index(res, req, next){
-        Videos.findById({_id: "64a0d4d365f8b0f1f5debb15"})
-            .then((videos) => {
-                req.json(videos)
+        NoiseReduction.find()
+            .then((NoiseReductions) => {
+                req.json(NoiseReductions)
             })
             .catch(next);
         // req.send('welcome page handle myvideo');

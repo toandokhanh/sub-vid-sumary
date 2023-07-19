@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "seed": "md-seed run"
+    "seed": "node config/db/seeder/NoiseReductionSeeder.js" 
   },
   "keywords": [],
   "author": "",
