@@ -6,15 +6,15 @@ const TextSummarization = require('./TextSummarization')
 const Video = require('./Video')
 
 const ResultSummarizationSchema = new mongoose.Schema({
+  video: {
+    type: ObjectId,
+    ref: 'Video'
+  }, 
   sentenceCountInput: { type: Number},
   wordCountInput: { type: Number},
   sentenceCountOutnput: { type: Number},
   wordCountOutnput: { type: Number},
   processing_time: { type: Number},
-  language: {
-    type: ObjectId,
-    ref: 'Language'
-  }, 
   noiseReduction: {
     type: ObjectId,
     ref: 'NoiseReduction'

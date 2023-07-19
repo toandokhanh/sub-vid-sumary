@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const NoiseReductions = require('../db/seeder/NoiseReductionSeeder')
-// const seedersList = {
-//     NoiseReductions
-//   };
+
 async function connect() {
     try {
         await mongoose.connect(process.env.MONGODB_URL, {
