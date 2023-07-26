@@ -15,7 +15,7 @@ const videosSchema = new mongoose.Schema({
   path_text: {type: String},
   path_text_summary: {type: String},
   predict_text_classification: {type: String},
-});
+},{ timestamps: true },);
 
 const Video = mongoose.model('Video', videosSchema);
 

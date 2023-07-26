@@ -65,7 +65,7 @@ const ResultSummarizationSchema = new mongoose.Schema({
       required: true
     }
   }
-});
+},{ timestamps: true },);
 
 const ResultSummarization = mongoose.model('ResultSummarization', ResultSummarizationSchema);
 

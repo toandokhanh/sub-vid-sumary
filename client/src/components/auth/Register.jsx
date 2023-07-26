@@ -26,6 +26,7 @@ function Register() {
 
       <MDBInput wrapperClass='mb-4' placeholder='Email' id='form1' type='email'/>
       <MDBInput wrapperClass='mb-4' placeholder='Password' id='form1' type='password'/>
+      <MDBInput wrapperClass='mb-4' placeholder='Confirm password' id='form1' type='password'/>
 
       <div className='d-flex mb-4'>
         <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label ='I have read and agree to the terms' />

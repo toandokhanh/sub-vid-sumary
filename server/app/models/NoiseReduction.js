@@ -11,7 +11,7 @@ const noiseReductionSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
+},{ timestamps: true },);
 
 const NoiseReduction = mongoose.model('NoiseReduction', noiseReductionSchema);
 

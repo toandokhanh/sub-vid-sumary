@@ -1,1 +1,22 @@
-http://localhost:5000/video
+
+POST http://localhost:5000/api/auth/register
+content-type: application/json
+
+{
+  "firstname": "jim",
+  "lastname": "jim",
+  "username": "jimmm",
+  "password": "jim"
+}
+
+###
+
+POST http://localhost:5000/api/auth/login
+content-type: application/json
+
+{
+  "username": "jim",
+  "password": "jim"
+}
+
+

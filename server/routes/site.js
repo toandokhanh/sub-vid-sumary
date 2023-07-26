@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const SiteController = require('../app/controllers/SiteController')
+const siteController = require('../app/controllers/SiteController')
 
-router.get('/', SiteController.index);
-router.get('/contacts', SiteController.contacts);
+router.get('/', siteController.index); // localhost:3000/api
+
 
 module.exports = router;
