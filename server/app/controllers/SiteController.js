@@ -1,12 +1,8 @@
 const {mongooseToObject, mutipleMongooseToObject} = require('../../util/mongoose')
 class SiteController {
     index(res, req, next ){
-        req.send('Welcome Home');
+        req.send('https://github.com/toandokhanh/App-summarizes-content-video');
     }
-    contacts(res, req, next){
-        req.send('welcome contacts')
-    }
-    
 }
 
 module.exports = new SiteController;

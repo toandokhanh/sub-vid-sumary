@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const userSchema = new mongoose.Schema({
+  fullname: {
+    type: String,
+    required: true
+  },
   username: {
     type: String,
     required: true,
@@ -12,7 +16,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
+},{ timestamps: true },);
 
 const User = mongoose.model('User', userSchema);
 

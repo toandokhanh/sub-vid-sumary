@@ -20,7 +20,6 @@ const Auth = ({authRoute}) => {
   )
   return (
     <>
-      <br/>
       <MDBContainer fluid className='p-5 w-75'>
         <MDBRow>
           <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>

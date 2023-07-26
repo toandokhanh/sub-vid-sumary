@@ -5,14 +5,13 @@ const cors = require('cors');
 const route = require('./routes')
 const APP = express();
 const dotenv = require("dotenv");
-
-
 dotenv.config();
 const PORT = process.env.PORT || 5000
+
 APP.use(bodyParser.json());
 APP.use(bodyParser.urlencoded({extended :true}));
 APP.use(cors());
-
+APP.use(express.json());
 // kết nối với database
 const DB = require('./config/db');
 DB.connect();
