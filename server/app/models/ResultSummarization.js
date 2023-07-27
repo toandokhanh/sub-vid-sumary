@@ -1,28 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-const NoiseReduction = require('./NoiseReduction')
-const TextSummarization = require('./TextSummarization')
 const Video = require('./Video')
+const TextSummarization = require('./TextSummarization')
+const NoiseReduction = require('./NoiseReduction')
 
-const ResultSummarizationSchema = new mongoose.Schema({
-  video: {
+const ResultSummarizationSchema = new mongoose.Schema({ 
+  textSummarization: {
     type: ObjectId,
-    ref: 'Video'
+    ref: 'TextSummarization'
+  }, 
+  noiseReduction: {
+    type: ObjectId,
+    ref: 'NoiseReduction'
   }, 
   sentenceCountInput: { type: Number},
   wordCountInput: { type: Number},
   sentenceCountOutnput: { type: Number},
   wordCountOutnput: { type: Number},
   processing_time: { type: Number},
-  noiseReduction: {
-    type: ObjectId,
-    ref: 'NoiseReduction'
-  },
-  textSummarization: {
-    type: ObjectId,
-    ref: 'TextSummarization'
-  },  
   rouge1: {
     recall: {
       type: Number,
@@ -65,7 +61,7 @@ const ResultSummarizationSchema = new mongoose.Schema({
       required: true
     }
   }
-},{ timestamps: true },);
+});
 
 const ResultSummarization = mongoose.model('ResultSummarization', ResultSummarizationSchema);
 

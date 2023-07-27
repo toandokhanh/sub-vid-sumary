@@ -11,7 +11,7 @@ const textSummarizationSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-},{ timestamps: true },);
+});
 
 const TextSummarization = mongoose.model('TextSummarization', textSummarizationSchema);
 
