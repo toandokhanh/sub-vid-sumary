@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-const Video = require('./Video')
-const TextSummarization = require('./TextSummarization')
-const NoiseReduction = require('./NoiseReduction')
+
 
 const ResultSummarizationSchema = new mongoose.Schema({ 
   textSummarization: {

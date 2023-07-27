@@ -20,3 +20,43 @@ content-type: application/json
 }
 
 
+###
+
+POST http://localhost:5000/api/video/save
+content-type: application/json
+
+{
+  "textSummarization": "textrank",
+  "noiseReduction": "no",
+  "sentenceCountInput": 10,
+  "wordCountInput": 200,
+  "sentenceCountOutput": 5,
+  "wordCountOutput": 100,
+  "processing_time": 30,
+  "rouge1": {
+    "recall": 0.75,
+    "precision": 0.80,
+    "f1Score": 0.77
+  },
+  "rouge2": {
+    "recall": 0.65,
+    "precision": 0.70,
+    "f1Score": 0.68
+  },
+  "rougel": {
+    "recall": 0.80,
+    "precision": 0.85,
+    "f1Score": 0.82
+  }
+}
+
+
+
+###
+
+POST http://localhost:5000/api/video/create
+content-type: application/json
+
+{
+  "pathVideo": "a"
+}
