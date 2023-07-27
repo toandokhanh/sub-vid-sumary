@@ -11,8 +11,11 @@ class VideoController{
             .catch(next);
         // req.send('welcome page handle myvideo');
     }
-    v1(res, req, next){
-        req.send('hello');
+    getall(res, req, next){
+        req.send('Get all your videos');
+    }
+    create(res, req, next){
+        req.send('create your new videos');
     }
 }
 

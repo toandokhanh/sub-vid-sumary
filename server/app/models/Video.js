@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 const Language = require('./Language');
+const User = require('./User');
+const ResultSummarization = require('./ResultSummarization');
+const TextSummarization = require('./TextSummarization');
+const NoiseReduction = require('./NoiseReduction')
 
 const videosSchema = new mongoose.Schema({
   date_time: {type: String},
@@ -11,6 +15,14 @@ const videosSchema = new mongoose.Schema({
   language: {
     type: ObjectId,
     ref: 'Language'
+  },
+  user: {
+    type: ObjectId,
+    ref: 'User'
+  },
+  resultSummarization: {
+    type: ObjectId,
+    ref: 'ResultSummarization'
   },
   path_text: {type: String},
   path_text_summary: {type: String},

@@ -2,7 +2,7 @@ const express = require('express');
 const VideoController = require('../app/controllers/VideoController')
 const router = express.Router();
 
-router.get('/', VideoController.index);//localhost:8000/api/video
-router.get('/getall', VideoController.v1);//localhost:8000/api/video/getall
+router.get('/getall', VideoController.getall);//localhost:8000/api/video
+router.post('/create', VideoController.create);//localhost:8000/api/video/getall
 
 module.exports = router;
