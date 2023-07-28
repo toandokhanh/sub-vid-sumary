@@ -3,7 +3,10 @@
 
 ![Alt text](image.png)
 
-
-###### cd server
+###### conda create myenv
+###### conda activate myenv
+###### npm install
 ###### npm run seed
-###### npm start
+###### run flask
+###### run nodejs
+###### run reactjs

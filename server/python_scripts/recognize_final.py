@@ -67,19 +67,15 @@ def recognize(wav_filename, args):
     with sr.AudioFile('tmp/tmp_32.wav') as source:
         audio = r.record(source)  
 
-    print('audiofile loaded')
-
     try:
         # https://pypi.org/project/SpeechRecognition/
         result = r.recognize_google(audio, language = args.language).lower()
     except sr.UnknownValueError:
-        print("cannot understand audio")
         result = ''
         os.remove(wav_filename)
     video_name = os.path.splitext(args.video)[0]
     with open( video_name +'_'+args.language+ '.txt', 'a', encoding='utf-8') as f:
         f.write(' {}'.format(result))
-    # print(result)
     
 
 def get_audio(video):
@@ -91,16 +87,11 @@ def get_audio(video):
 
 def split_into_frames(audiofile, args, folder='samples'):
     data, sr = librosa.load(audiofile)
-    print(data)
-    print(sr)
     try:
         duration = librosa.get_duration(y=data, sr=sr)
     except:
         duration = librosa.get_duration(audiofile)
     
-    #print('video duration, hours: {}'.format(duration/3600))
-    print('video duration, seconds: {}'.format(duration))
-
     # tach moi file dai tam 50s
     
     for i in range(0,int(duration-1),args.step_time):
@@ -119,17 +110,14 @@ def checkfolder (path):
     if not isExist:
         # Create a new directory because it does not exist
         os.makedirs(path)
-        print("The "+str(path)+" directory is created!")
 
 def noise_reduce(file,file_out):
     y, sr = librosa.load(file)
     reduced_noise = nr.reduce_noise(y = y, sr=sr, thresh_n_mult_nonstationary=2,stationary=False)
     sf.write(file_out,reduced_noise, sr, subtype='PCM_24')
-    print('Đang giảm nhiễu với thuật toán noise_reduce!')
 
 def noise_deepfilternet(file,file_out):
     os.system('deepFilter {} -o {}'.format(file,file_out))
-    print('Đang giảm nhiễu với thuật toán noise_deepfilternet!')
 
 def rename(filename,newname): 
     os.rename(filename, newname)
@@ -187,9 +175,9 @@ def get_topic(text):
         with open(video_name +'_'+args.language+'_vi.txt', 'w', encoding='utf-8') as f:
             f.write(text_trans)
         if os.path.exists(video_name +'_'+args.language+'_vi.txt'):
-            print("Save the sub-vi file successfully")
+            print("")
         else:
-            print("Save the sub-vi file failed") 
+            print("") 
     topic = '_'.join(classify(text_trans))
     return topic
 
@@ -207,8 +195,6 @@ def save_result_to_file(result, args):
         result_str_translated = result_str_translated.replace('_', ' ')
     with open(file_path +'_'+args.language+'_'+args.algorithm_summary+'_summary.txt', 'w', encoding='utf-8') as file:
         file.write(result_str_translated)
-    print(f"File summary at {file_path +'_'+args.language+'_'+args.algorithm_summary+'_summary.txt',} successfully saved")
-
 
 def translate_text(text, src, dest):
     translator = Translator()
@@ -247,32 +233,27 @@ if __name__ == '__main__':
     
     # files = sorted(glob( folder + '/*.wav'))
     files = sorted(glob( folder + '/*.wav'), key = os.path.getmtime)
-    print(files)
     # tao file de luu phu de
     video_name = os.path.splitext(args.video)[0]
     if os.path.exists(video_name + '_' + args.language + '.txt'):
-        print('ton tai file'+video_name + '_' + args.language + '.txt')
+        print('')
     else:
-        print('k tai file'+video_name + '_' + args.language + '.txt')
+        print('')
         open(video_name+'_'+args.language+'.txt', 'w', encoding = 'utf-8').write('')
         noises = args.algorithm_noise
         if noises:
             # Giảm nhiễu dùng thuật toán deepfilter
             if noises == 'deep':
-                print("Use DeepFilterNet")
                 for file in files:
                     path = file[:file.rindex('/') + 1]
                     nameFile = file[file.rindex('/') + 1:file.rindex('.')]
                     noise_deepfilternet(file,path)
                     rename(path+nameFile+'_DeepFilterNet2.wav',file)
                 for file in files:
-                    print("file")
-                    print(file)
                     recognize(file,args)
                 pass
             # Giải thuật giảm nhiễu Noisereduce (không cố định)
             elif noises == 'noise':
-                print("Use NoiseReduce")
                 for file in files:
                     noise_reduce(file,file)
                 for file in files:
@@ -280,7 +261,6 @@ if __name__ == '__main__':
             else:
             # Không chọn giải thuật
                 # rename(path+name+'.wav',path+newname+'.wav')
-                print("Do not use reduce_noise algorithm")
                 for file in files:
                     recognize(file,args)
                 pass
@@ -294,51 +274,43 @@ if __name__ == '__main__':
         text = file.read()
     topic = get_topic(text)
     sumamary = args.algorithm_summary
+    
     if sumamary:
         if sumamary == 'lexrank':
             path_processed_text = punctuate_text(text, args)
             result_lexrank = lexrank_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_lexrank, args)
         elif sumamary == 'textrank':
-            print('Use textRank')  
             path_processed_text = punctuate_text(text, args)
             result_textrank = textrank_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_textrank, args)
         elif sumamary == 'lsa':
-            print('Use LSA')
             path_processed_text = punctuate_text(text, args)
             result_lsa = lsa_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_lsa, args)
         elif sumamary == 'luhn':
-            print('Use LUHN')  
             path_processed_text = punctuate_text(text, args)
             result_luhn = luhn_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_luhn, args)
         elif sumamary == 'edmundson':
-            print('Use Edmundson')
             path_processed_text = punctuate_text(text, args)
             result_edmundson = edmundson_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_edmundson, args)
         elif sumamary == 'random':
-            print('Use random')  
             path_processed_text = punctuate_text(text, args)
             result_random = random_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_random, args)
         elif sumamary == 'kl':
-            print('Use KL-sum')  
             path_processed_text = punctuate_text(text, args)
             result_kl = kl_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_kl, args)
         elif sumamary == 'reduction':
-            print('Use reduction')  
             path_processed_text = punctuate_text(text, args)
             result_reduction = reduction_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_reduction, args)
         else:
-            print('Do not use summary algorithm') 
-                 
+            print('') 
 
-    print('The topic of the video is :',topic)
     end = time.time()
     history_file = 'result/history.txt'
     if args.algorithm_summary == 'no':
@@ -349,6 +321,7 @@ if __name__ == '__main__':
         path_processed_text = video_name+'_en_processed_text'+'.txt'
         count_sentence_processed_text = count_sentence(path_processed_text)
         path_processed_text = path_processed_text+', '+count_sentence_processed_text
+        
         # day là file tóm tắt dùng để so sash với file gốc
         path_processed_summary_text = video_name +'_en_processed_text_'+args.algorithm_summary+'_summary.txt'
         count_sentence_summary_text = count_sentence(path_processed_summary_text)
@@ -362,13 +335,10 @@ if __name__ == '__main__':
             read_video_info = read_video_info(args.video)
             if args.extra_argument == None:
                 args.extra_argument = 'none'
-            content = folder+', '+args.video+', '+read_video_info+', '+args.language+', '+file_path+', '+count_sentence+', '+path_processed_text+', '+path_processed_summary_text+', '+args.algorithm_noise+', '+args.algorithm_summary+', '+args.extra_argument +', '+format(end - start)+', '+topic+', '+rouge_1_recall+', '+rouge_1_precision+', '+rouge_1_f1+', '+rouge_2_recall+', '+rouge_2_precision+', '+rouge_2_f1+', '+rouge_l_recall+', '+rouge_l_precision+', '+rouge_l_f1
-            # print(content)print("Recall:", rouge_1_recall)
-            # print("Precision:", rouge_1_precision)
-            # print("F1-score:", rouge_1_f1)
+            source_path =video_name+'_'+args.language+'.txt'
+            sumary_source_path =video_name+'_'+args.language+'_'+args.algorithm_summary+'_summary.txt'
+            content = source_path+', '+sumary_source_path+', '+folder+', '+args.video+', '+read_video_info+', '+args.language+', '+file_path+', '+count_sentence+', '+path_processed_text+', '+path_processed_summary_text+', '+args.algorithm_noise+', '+args.algorithm_summary+', '+args.extra_argument +', '+format(end - start)+', '+topic+', '+rouge_1_recall+', '+rouge_1_precision+', '+rouge_1_f1+', '+rouge_2_recall+', '+rouge_2_precision+', '+rouge_2_f1+', '+rouge_l_recall+', '+rouge_l_precision+', '+rouge_l_f1
             file.write(f'{content} \n')
 
-    # Đã lưu lịch sử chạy code thành công
-    
-    print('elapsed time: {}'.format(end - start))
+    print(content)
     # os.system('rm tmp/*')
