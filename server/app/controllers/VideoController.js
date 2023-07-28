@@ -1,7 +1,8 @@
+const Video = require('../models/Video')
 const ResultSummarization = require('../models/ResultSummarization')
 const NoiseReduction = require('../models/NoiseReduction')
 const TextSummarization = require('../models/TextSummarization')
-const { spawn } = require('child_process');
+const request = require('request')
 class VideoController{
     // [GET] localhost:5000/video
     index(req, res, next ){
@@ -16,26 +17,84 @@ class VideoController{
         res.send('Get all your videos');
     }
     
-    async create(req, res){
-        const {pathVideo} = req.body;
-        console.log(pathVideo);
-        // const pythonProcess = spawn('python3', ['../../python_scripts/recognize_final.py', '-l', 'vi', '-video', pathVideo, '-noise', 'deep', '-summary', 'lexrank', '-sentence', '2']);
-        const pythonProcess = spawn('python3',["../python_scripts/a.py", pathVideo]);
-        // Xử lý kết quả trả về từ Python
-        pythonProcess.stdout.on('data', (data) => {
-            const summary = data.toString(); // Dữ liệu trả về từ Python (tóm tắt văn bản)
-            res.send(summary); // Gửi kết quả tóm tắt về frontend
-        });
+    async create(req, res) {
+        // call FLASK API
+        // console.log(req.body)
+        const {video, language, noise, summary, sentence} = req.body;
+        // Simple validation
+        if (!video || !language || !noise || !summary || !sentence)
+            return res
+                .status(400)
+                .json({ success: false, message: 'Lack of information' })
+        // call FLASK API (app.py) 
+        const dataToSend = req.body;
+        const apiUrl = 'http://localhost:5000/api/createSummarize'; 
+        request.post(
+        {
+            url: apiUrl,
+            json: dataToSend
+        },
+        async (error, response, body) => {
+            if (error) {
+                console.error('Call error when FLASK API', error);
+            } else {
+                // call API ok
+                const {sourcePath, sumarySourcePath, dateTime, pathVideo,kb,time,language,pathText,sentenceIP,wordIP,sentenceOP,wordOP,noiseID,summaryID,processingTime,topic,r1R,r1P,r1F,r2R,r2P,r2F,rlR,rlP,rlF} = body;
+                
+                // save the sumarization results 
+                try {
+                    const textSummarizationId = await TextSummarization.findOne({ id: summaryID });
+                    const noiseReductionId = await NoiseReduction.findOne({ id: noiseID });
+                    // console.log('textSummarizationId')
+                    // console.log(textSummarizationId)
+                    // console.log('noiseReductionId')
+                    // console.log(noiseReductionId)
+                    if (!textSummarizationId || !noiseReductionId)
+                        return res
+                            .status(400)
+                            .json({ success: false, message: 'algorithms not found!' })
+                    // all good
+                    const newResultSummarization = new ResultSummarization({
+                        textSummarization: textSummarizationId,
+                        noiseReduction: noiseReductionId,
+                        sentenceCountInput: sentenceIP,
+                        wordCountInput: wordIP,
+                        sentenceCountOutput: sentenceOP,
+                        wordCountOutput: wordOP,
+                        processing_time: processingTime,
+                        path_text: sourcePath,
+                        path_text_summary: sumarySourcePath,
+                        predict_text_classification: topic,
+                        rouge1: {
+                            recall: r1R,
+                            precision: r1P,
+                            f1Score: r1F,
 
-        // Xử lý lỗi nếu có
-        pythonProcess.on('error', (error) => {
-            console.error('Lỗi khi chạy mã Python:', error);
-            res
-                .status(500)
-                .send('Đã xảy ra lỗi khi xử lý yêu cầu.');
-        })
+                        },
+                        rouge2: {
+                            recall: r2R,
+                            precision: r2P,
+                            f1Score: r2F,
+                        },
+                        rougel: {
+                            recall: rlR,
+                            precision: rlP,
+                            f1Score: rlF,
+                        },
+                    });
+                    await newResultSummarization.save();
+
+                    //
+                    res
+                        .status(200)
+                        .json({ success: true, message:'Summary result created successfully' });
+                } catch (error) {
+                    console.log(error);
+                    res.status(500).json({success: false, message:'Internal Server Error'});
+                }
+            }
+        });
     };
-    
     
     
     async save(req, res, next ){
@@ -66,8 +125,12 @@ class VideoController{
                 rouge2,
                 rougel,
             });
-            
             await newResultSummarization.save();
+            // get user, video informations => save video model require('../models/Video')
+            // .....
+            // ......
+            // .......
+            // ........
             res
                 .status(200)
                 .json({ success: true, message:'Summary result created successfully' });

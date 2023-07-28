@@ -1,17 +1,19 @@
 
-POST http://localhost:5000/api/auth/register
+#### REGISTER
+
+POST http://localhost:6000/api/auth/register
 content-type: application/json
 
 {
-  "firstname": "jim",
-  "lastname": "jim",
-  "username": "jimmm",
-  "password": "jim"
+  "firstname": "toan",
+  "lastname": "do",
+  "username": "toan",
+  "password": "toan"
 }
 
-###
+### LOGIN
 
-POST http://localhost:5000/api/auth/login
+POST http://localhost:6000/api/auth/login
 content-type: application/json
 
 {
@@ -20,7 +22,7 @@ content-type: application/json
 }
 
 
-###
+### TEST SAVE VIDEO RESULTS
 
 POST http://localhost:5000/api/video/save
 content-type: application/json
@@ -50,13 +52,29 @@ content-type: application/json
   }
 }
 
+### FLASK API TEST
 
-
-###
-
-POST http://localhost:5000/api/video/create
-content-type: application/json
+POST http://localhost:5000/api/createSummarize
+Content-Type: application/json
 
 {
-  "pathVideo": "a"
+  "video": "7.mp4",
+  "language": "vi",
+  "noise": "noise",
+  "summary": "textrank",
+  "sentence": 2
+}
+
+
+### API CREATE A NEW VIDEO
+
+POST http://localhost:3000/api/video/create
+Content-Type: application/json
+
+{
+  "video": "7.mp4",
+  "language": "vi",
+  "noise": "noise",
+  "summary": "textrank",
+  "sentence": 2
 }

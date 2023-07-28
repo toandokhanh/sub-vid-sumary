@@ -17,6 +17,9 @@ const ResultSummarizationSchema = new mongoose.Schema({
   sentenceCountOutnput: { type: Number},
   wordCountOutnput: { type: Number},
   processing_time: { type: Number},
+  path_text: {type: String},
+  path_text_summary: {type: String},
+  predict_text_classification: {type: String},
   rouge1: {
     recall: {
       type: Number,
