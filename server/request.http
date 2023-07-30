@@ -24,7 +24,7 @@ content-type: application/json
 
 ### TEST SAVE VIDEO RESULTS
 
-POST http://localhost:5000/api/video/save
+POST http://localhost:6000/api/video/save
 content-type: application/json
 
 {
@@ -52,6 +52,20 @@ content-type: application/json
   }
 }
 
+### API CREATE A NEW VIDEO
+
+POST http://localhost:6000/api/video/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGMxMjMwNWE2YjhmMTViNTM1MmViZWEiLCJpYXQiOjE2OTA2OTgwNDR9.a__7bCt_FU-gkY57TNJm5_KTyWn-LDxIT4W9GKihYlw
+
+{
+  "video": "7.mp4",
+  "language": "vi",
+  "noise": "noise",
+  "summary": "textrank",
+  "sentence": 0
+}
+
 ### FLASK API TEST
 
 POST http://localhost:5000/api/createSummarize
@@ -66,15 +80,3 @@ Content-Type: application/json
 }
 
 
-### API CREATE A NEW VIDEO
-
-POST http://localhost:3000/api/video/create
-Content-Type: application/json
-
-{
-  "video": "7.mp4",
-  "language": "vi",
-  "noise": "noise",
-  "summary": "textrank",
-  "sentence": 2
-}

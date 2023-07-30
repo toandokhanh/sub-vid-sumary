@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "seed": "node config/db/seeder/NoiseReductionSeeder.js",
+    "seed": "node config/db/seeder/Seeder.js",
     "run-flask": "node util/runpy.js"
   },
   "keywords": [],

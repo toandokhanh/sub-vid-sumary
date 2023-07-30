@@ -18,9 +18,9 @@ def summarize():
     output = subprocess.check_output(command, shell=True, text=True).strip()
     result_list = output.split(', ')
     keys = [
-        'sourcePath', 'sumarySourcePath', 'dateTime', 'pathVideo','kb','time','language','pathText', 'aaaaaaa',
-        'aaaaaaaaa', 'aaaaaaaaaa', 'sentenceIP', 'wordIP', 'aaaaaaaaaaaaa',
-        'sentenceOP', 'wordOP', 'noiseID', 'summaryID', 'aaaaaaaaaaaaaaaaaa', 'processingTime', 'topic',
+        'sourcePath', 'sumarySourcePath', 'dateTime', 'pathVideo','kb','time','language','pathText', 'aaaa',
+        'a', 'aa', 'sentenceIP', 'wordIP', 'aaa',
+        'sentenceOP', 'wordOP', 'noiseID', 'summaryID', 'aaa', 'processingTime', 'topic',
         'r1R','r1P','r1F','r2R','r2P','r2F','rlR','rlP','rlF'
     ]
 
