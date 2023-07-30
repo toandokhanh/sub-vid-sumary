@@ -83,7 +83,7 @@ class VideoController{
                         },
                     });
                     await newResultSummarization.save();
-
+                    
                     //
                     res
                         .status(200)
