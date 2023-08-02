@@ -5,10 +5,10 @@ const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken')
 dotenv.config();
 class AuthController {
-    index(res, req, next ){
+    index(res, req){
         req.send('Welcome auth');
     }
-    async register(req, res, next ){
+    async register(req, res){
         const {firstname, lastname, username, password} = req.body;
         // Simple validation
         const fullname = firstname + ' ' + lastname;
@@ -44,7 +44,7 @@ class AuthController {
         }
             
     }
-    async login(req, res, next ){
+    async login(req, res){
         const {username, password} = req.body;
         // Simple validation
         if (!username || !password)

@@ -27,4 +27,5 @@ def summarize():
     result_dict = dict(zip(keys, result_list))
     return jsonify(result_dict)
 if __name__ == '__main__':
+    app.run(port=6000) 
     app.run(debug=True)

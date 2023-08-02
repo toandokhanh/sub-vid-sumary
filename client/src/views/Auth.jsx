@@ -10,6 +10,7 @@ import {
   MDBIcon
 }
 from 'mdb-react-ui-kit';
+
 const Auth = ({authRoute}) => {
   let body;
   body = (
@@ -37,24 +38,22 @@ const Auth = ({authRoute}) => {
           <MDBCol md='6'>
             <MDBCard className='my-5'>
               <MDBCardBody className='p-5'>
-                <div className="text-center">
-                  {body}
-                  <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
-                    <MDBIcon fab icon='facebook-f' size="sm"/>
-                  </MDBBtn>
+                {body}
+                <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
+                  <MDBIcon fab icon='facebook-f' size="sm"/>
+                </MDBBtn>
 
-                  <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
-                    <MDBIcon fab icon='twitter' size="sm"/>
-                  </MDBBtn>
+                <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
+                  <MDBIcon fab icon='twitter' size="sm"/>
+                </MDBBtn>
 
-                  <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
-                    <MDBIcon fab icon='google' size="sm"/>
-                  </MDBBtn>
+                <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
+                  <MDBIcon fab icon='google' size="sm"/>
+                </MDBBtn>
 
-                  <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
-                    <MDBIcon fab icon='github' size="sm"/>
-                  </MDBBtn>
-                </div>
+                <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
+                  <MDBIcon fab icon='github' size="sm"/>
+                </MDBBtn>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

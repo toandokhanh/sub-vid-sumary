@@ -5,66 +5,45 @@ POST http://localhost:6000/api/auth/register
 content-type: application/json
 
 {
-  "firstname": "toan",
-  "lastname": "do",
-  "username": "toan",
-  "password": "toan"
+  "firstname": "an",
+  "lastname": "an",
+  "username": "an",
+  "password": "an"
 }
 
 ### LOGIN
 
-POST http://localhost:6000/api/auth/login
+POST http://localhost:8000/api/auth/login
 content-type: application/json
 
 {
-  "username": "jim",
-  "password": "jim"
+  "username": "an",
+  "password": "an"
 }
 
+### CREATE A NEW VIDEO
 
-### TEST SAVE VIDEO RESULTS
-
-POST http://localhost:6000/api/video/save
-content-type: application/json
-
-{
-  "textSummarization": "textrank",
-  "noiseReduction": "no",
-  "sentenceCountInput": 10,
-  "wordCountInput": 200,
-  "sentenceCountOutput": 5,
-  "wordCountOutput": 100,
-  "processing_time": 30,
-  "rouge1": {
-    "recall": 0.75,
-    "precision": 0.80,
-    "f1Score": 0.77
-  },
-  "rouge2": {
-    "recall": 0.65,
-    "precision": 0.70,
-    "f1Score": 0.68
-  },
-  "rougel": {
-    "recall": 0.80,
-    "precision": 0.85,
-    "f1Score": 0.82
-  }
-}
-
-### API CREATE A NEW VIDEO
-
-POST http://localhost:6000/api/video/create
+POST http://localhost:5000/api/video/create
 Content-Type: application/json
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 {
   "video": "7.mp4",
-  "language": "vi",
-  "noise": "noise",
-  "summary": "textrank",
-  "sentence": 0
+  "language": "en",
+  "noise": "deep",
+  "summary": "kl",
+  "sentence": 2
 }
+
+### Get Videos All
+
+GET http://localhost:6000/api/video/getallvideo
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
+### Get video details
+
+GET http://localhost:6000/api/video/getvideodetail/20230730_083504
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 ### FLASK API TEST
 
@@ -78,5 +57,4 @@ Content-Type: application/json
   "summary": "textrank",
   "sentence": 2
 }
-
 
