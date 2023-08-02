@@ -2,24 +2,62 @@ const Video = require('../models/Video')
 const ResultSummarization = require('../models/ResultSummarization')
 const NoiseReduction = require('../models/NoiseReduction')
 const TextSummarization = require('../models/TextSummarization')
+const Language = require('../models/Language')
 const request = require('request')
 class VideoController{
     // [GET] localhost:5000/video
-    index(req, res, next ){
-        NoiseReduction.find()
-            .then((NoiseReductions) => {
-                res.json(NoiseReductions)
-            })
-            .catch(next);
-        // req.send('welcome page handle myvideo');
+    index(req, res){
+        // NoiseReduction.find()
+        //     .then((NoiseReductions) => {
+        //         res.json(NoiseReductions)
+        //     })
+        //     .catch(error);
     }
-    getall(req, res, next ){
-        res.send('Get all your videos');
-    }
-    
+    async getAllVideo(req, res){
+        const videoAll = await Video.find({ user: req.userId  });
+        //simple validation
+        if (!videoAll)
+            return res
+                .status(400)
+                .json({ success: false, message: 'Video not found!' })
+        return res
+            .status(200)
+            .json({ success: true, message: 'ok', videoAll })
+    };
+
+
+    async getVideoDetail(req, res){
+        const dateTime = req.params.id; // dateTime => primary key video
+        // Simple validation
+        if (!dateTime)
+            return res
+                .status(400)
+                .json({ success: false, message: 'Detailed video not found' })
+        try {
+            const video = await Video.findOne({ date_time: dateTime });
+            if (!video)
+                return res
+                    .status(400)
+                    .json({ success: false, message: 'Detailed video not found' }) 
+            const videoResult = await ResultSummarization.findOne({ _id: video.resultSummarization});
+            const NoiseReductionId = await NoiseReduction.findOne({ _id: videoResult.noiseReduction });
+            const TextSummarizationId = await TextSummarization.findOne({ _id: videoResult.textSummarization});
+            if (!videoResult || !NoiseReductionId || !TextSummarizationId)
+                return res
+                    .status(400)
+                    .json({ success: false, message: 'Result not found!' })
+            // all good
+            return res
+                .status(200)
+                .json({ success: true, message: 'ok' , result:videoResult, NoiseReductionName: NoiseReductionId.name,TextSummarizationName: TextSummarizationId.name})
+        } catch (error) {
+            console.log(error);
+                    res.status(500).json({success: false, message:'Internal Server Error'});
+        }
+    };
+
+
     async create(req, res) {
-        // call FLASK API
-        // console.log(req.body)
         const {video, language, noise, summary, sentence} = req.body;
         // Simple validation
         if (!video || !language || !noise || !summary || !sentence)
@@ -28,7 +66,7 @@ class VideoController{
                 .json({ success: false, message: 'Lack of information' })
         // call FLASK API (app.py) 
         const dataToSend = req.body;
-        const apiUrl = 'http://localhost:5000/api/createSummarize'; 
+        const apiUrl =  process.env.FLASKAPI_URL; 
         request.post(
         {
             url: apiUrl,
@@ -40,20 +78,15 @@ class VideoController{
             } else {
                 // call API ok
                 const {sourcePath, sumarySourcePath, dateTime, pathVideo,kb,time,language,pathText,sentenceIP,wordIP,sentenceOP,wordOP,noiseID,summaryID,processingTime,topic,r1R,r1P,r1F,r2R,r2P,r2F,rlR,rlP,rlF} = body;
-                
-                // save the sumarization results 
                 try {
                     const textSummarizationId = await TextSummarization.findOne({ id: summaryID });
                     const noiseReductionId = await NoiseReduction.findOne({ id: noiseID });
-                    // console.log('textSummarizationId')
-                    // console.log(textSummarizationId)
-                    // console.log('noiseReductionId')
-                    // console.log(noiseReductionId)
+
                     if (!textSummarizationId || !noiseReductionId)
                         return res
                             .status(400)
                             .json({ success: false, message: 'algorithms not found!' })
-                    // all good
+                    // save the sumarization results 
                     const newResultSummarization = new ResultSummarization({
                         textSummarization: textSummarizationId,
                         noiseReduction: noiseReductionId,
@@ -83,8 +116,22 @@ class VideoController{
                         },
                     });
                     await newResultSummarization.save();
-                    
-                    //
+                    // save video information
+                    const languageId = await Language.findOne({ id: language });
+                    if (!languageId)
+                        return res
+                            .status(400)
+                            .json({ success: false, message: 'Language not found!' })
+                    const newVideo = new Video({
+                        date_time: dateTime,
+                        path_video: pathVideo,
+                        capacity: kb,
+                        time: time,
+                        language: languageId,
+                        user: req.userId, // exist in Auth middleware 
+                        resultSummarization: newResultSummarization._id
+                    })
+                    await newVideo.save();
                     res
                         .status(200)
                         .json({ success: true, message:'Summary result created successfully' });
@@ -95,50 +142,6 @@ class VideoController{
             }
         });
     };
-    
-    
-    async save(req, res, next ){
-        const { textSummarization, noiseReduction, sentenceCountInput, wordCountInput, sentenceCountOutput, wordCountOutput, processing_time, rouge1, rouge2, rougel } = req.body;
-        
-        if (!textSummarization || !noiseReduction || !sentenceCountInput || !wordCountInput || !sentenceCountOutput || !wordCountOutput || !processing_time || !rouge1 || !rouge2 || !rougel)
-            return res
-                .status(400)
-                .json({ success: false, message: 'not found' })
-        try {
-            const textSummarizationId = await TextSummarization.findOne({ id: textSummarization });
-            const noiseReductionId = await NoiseReduction.findOne({ id: noiseReduction });
-            if (!textSummarizationId || !noiseReductionId)
-                return res
-                    .status(400)
-                    .json({ success: false, message: 'algorithms not found!' })
-
-            // ok good
-            const newResultSummarization = new ResultSummarization({
-                textSummarization: textSummarizationId,
-                noiseReduction: noiseReductionId,
-                sentenceCountInput,
-                wordCountInput,
-                sentenceCountOutput,
-                wordCountOutput,
-                processing_time,
-                rouge1,
-                rouge2,
-                rougel,
-            });
-            await newResultSummarization.save();
-            // get user, video informations => save video model require('../models/Video')
-            // .....
-            // ......
-            // .......
-            // ........
-            res
-                .status(200)
-                .json({ success: true, message:'Summary result created successfully' });
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({success: false, message:'Internal Server Error'});
-        }
-    }
 }
 
 
