@@ -13,7 +13,7 @@ import './auth.scss';
 function Register() {
   return (
     <>
-        <h3>REGISTER</h3> <br></br>
+        <h3 className='text-center'>REGISTER</h3> <br></br>
         <MDBRow>
             <MDBCol col='6'>
               <MDBInput wrapperClass='mb-4' placeholder='First name' id='form1' type='text'/>

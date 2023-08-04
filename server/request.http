@@ -1,7 +1,13 @@
 
 #### REGISTER
 
-POST http://localhost:6000/api/auth/register
+GET http://localhost:5000/api/auth
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5YzU5M2ZmZWM3ZTZmYjFlMDhlNTgiLCJpYXQiOjE2OTA5NDUwNzd9.9J7JW78ra8ZWo3v-ur9xil9lyuYbhod1NNC5HiwJKYY
+
+
+#### REGISTER
+
+POST http://localhost:5000/api/auth/register
 content-type: application/json
 
 {
@@ -13,7 +19,7 @@ content-type: application/json
 
 ### LOGIN
 
-POST http://localhost:8000/api/auth/login
+POST http://localhost:5000/api/auth/login
 content-type: application/json
 
 {
