@@ -5,8 +5,16 @@ const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken')
 dotenv.config();
 class AuthController {
-    index(res, req){
-        req.send('Welcome auth');
+    async index(req, res){
+        try {
+            const user = await User.findById(req.userId).select('-password')
+            if (!user)
+                return res.status(400).json({ success: false, message: 'User not found' })
+            res.json({ success: true, user })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, message: 'Internal server error' })
+        }
     }
     async register(req, res){
         const {firstname, lastname, username, password} = req.body;

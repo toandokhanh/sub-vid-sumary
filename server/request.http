@@ -1,7 +1,13 @@
 
 #### REGISTER
 
-POST http://localhost:6000/api/auth/register
+GET http://localhost:5000/api/auth
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
+
+#### REGISTER
+
+POST http://localhost:5000/api/auth/register
 content-type: application/json
 
 {
@@ -13,7 +19,7 @@ content-type: application/json
 
 ### LOGIN
 
-POST http://localhost:8000/api/auth/login
+POST http://localhost:5000/api/auth/login
 content-type: application/json
 
 {
