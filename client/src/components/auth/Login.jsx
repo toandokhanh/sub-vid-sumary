@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AuthContext } from '../../contexts/authContext';
+import AlertMessage from '../Layout/AlertMessage'
 import {
-  MDBRow,
   MDBCol,
   MDBInput,
   MDBCheckbox,
@@ -12,14 +12,13 @@ import {
 from 'mdb-react-ui-kit';
 const Login = () => {
   // Context
-  const navigate = useNavigate();
   const { loginUser } = useContext(AuthContext)
   // Local state
   const [loginForm, setLoginForm] = useState({
     username: '',
     password: ''
   });
-
+  const [alert, setAlert] = useState(null)
   const { username, password } = loginForm;
 
   const onChangeLoginForm = event => setLoginForm({ ...loginForm, [event.target.name]: event.target.value });
@@ -27,14 +26,17 @@ const Login = () => {
 		event.preventDefault()
 		try {
 			const loginData = await loginUser(loginForm)
-			if(loginData.success) return navigate('/dashboard')
-			console.log(loginData.message)
+			if (!loginData.success) {
+				setAlert({ type: 'danger', message: loginData.message })
+				setTimeout(() => setAlert(null), 5000)
+			}
 		} catch (error) {
 			console.log(error)
 		}
 	}
   return (
     <>
+	<AlertMessage info={alert} />
       <Form className='my-4' onSubmit={handleLogin}>
         <h3 className='text-center'	>LOGIN</h3> <br></br>
 				<MDBCol>
