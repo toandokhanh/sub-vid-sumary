@@ -6,22 +6,18 @@ import '../../App.css'
 function Dashboard() {
   const [file, setFile] = useState(null);
   const [sourceLanguage, setSourceLanguage] = useState('');
-  const [targetLanguage, setTargetLanguage] = useState('');
-  const [subtitleName, setSubtitleName] = useState('');
+  const [NoiseReduction, setNoiseReduction] = useState('');
+  const [TextSummarization, setTextSummarization] = useState('');
+  const [SummarySentences, setSummarySentences] = useState('');
   const [noiseReductionAlgorithm, setNoiseReductionAlgorithm] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Perform any necessary actions with the form data here
-    // For example, you can send the form data to a server using fetch or Axios
-    // ...
-
-    // Reset form values after submission
     setFile(null);
     setSourceLanguage('');
-    setTargetLanguage('');
-    setSubtitleName('');
+    setNoiseReduction('');
+    setTextSummarization('');
+    setSummarySentences('');
     setNoiseReductionAlgorithm('');
   };
   return (
@@ -39,42 +35,46 @@ function Dashboard() {
       <Form.Group>
         <Form.Label>Source language (input)</Form.Label>
         <Form.Control as="select" value={sourceLanguage} onChange={(e) => setSourceLanguage(e.target.value)}>
-          <option value="english">English</option>
-          <option value="french">French</option>
-          <option value="spanish">Spanish</option>
-          {/* Add other language options here */}
+          <option value="vi">Tiếng việt</option>
+          <option value="en">English</option>
         </Form.Control>
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Label>Target language (output)</Form.Label>
-        <Form.Control as="select" value={targetLanguage} onChange={(e) => setTargetLanguage(e.target.value)}>
-          <option value="english">English</option>
-          <option value="french">French</option>
-          <option value="spanish">Spanish</option>
-          {/* Add other language options here */}
-        </Form.Control>
-      </Form.Group>
-
-      <Form.Group>
-        <Form.Label>New subtitle name</Form.Label>
-        <Form.Control
-          type="text"
-          value={subtitleName}
-          onChange={(e) => setSubtitleName(e.target.value)}
-        />
       </Form.Group>
 
       <Form.Group>
         <Form.Label>Noise reduction algorithm</Form.Label>
+        <Form.Control as="select" value={NoiseReduction} onChange={(e) => setNoiseReduction(e.target.value)}>
+          <option value="no">Do not use algorithms</option>
+          <option value="deep">DeepFilterNet</option>
+          <option value="noise">NoiseReduce</option>
+          {/* Add other language options here */}
+        </Form.Control>
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Text summarization algorithm</Form.Label>
+        <Form.Control as="select" value={TextSummarization} onChange={(e) => setTextSummarization(e.target.value)}>
+          <option value="lexrank">Giải thuật Lexrank</option>
+          <option value="textrank">Giải thuật Textrank</option>
+          <option value="lsa">Giải thuật LSA</option>
+          <option value="random">Giải thuật Random</option>
+          <option value="reduction">Giải thuật Reduction</option>
+          <option value="edmundson">Giải thuật Edmundson</option>
+          <option value="kl">Giải thuật KL-sum</option>
+        </Form.Control>
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Summary sentences</Form.Label>
         <Form.Control
-          type="text"
-          value={noiseReductionAlgorithm}
-          onChange={(e) => setNoiseReductionAlgorithm(e.target.value)}
+          type="number"
+          value={SummarySentences}
+          onChange={(e) => setSummarySentences(e.target.value)}
+          max={10}
+          min={1}
         />
       </Form.Group>
       <br/>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" className="custom-button">
         Submit
       </Button>
     </Form>
