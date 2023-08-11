@@ -34,8 +34,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5YzU5M2ZmZWM3ZTZmYjFlMDhlNTgiLCJpYXQiOjE2OTA5NDUwNzd9.9J7JW78ra8ZWo3v-ur9xil9lyuYbhod1NNC5HiwJKYY
 
 {
-  "video": "7.mp4",
-  "language": "en",
+  "video": "10.mp4",
+  "language": "vi",
   "noise": "deep",
   "summary": "kl",
   "sentence": 2
@@ -43,14 +43,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5Y
 
 ### Get Videos All
 
-GET http://localhost:6000/api/video/getallvideo
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5YzU5M2ZmZWM3ZTZmYjFlMDhlNTgiLCJpYXQiOjE2OTA5NDUwNzd9.9J7JW78ra8ZWo3v-ur9xil9lyuYbhod1NNC5HiwJKYY
-
+GET http://localhost:5000/api/video/getallvideo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1ZTRmODY0ODI3MTg1MTc1MDg0ZmEiLCJpYXQiOjE2OTE3MzkzODR9.LDAwHq0VLod4ihOH3mh3N66G-2E0FtODvjluFeJ5t00
 ### Get video details
 
-GET http://localhost:6000/api/video/getvideodetail/20230730_083504
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM2MjBhMjY1ZjBlNzBlYWM0M2E0YTMiLCJpYXQiOjE2OTA3MDYwODJ9.du_spWg3xJlIpz_jDeHQd9Ij3r6Y1PITegQe5kAOsNg
-
+GET http://localhost:5000/api/video/getvideodetail/20230811_152201
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1ZTRmODY0ODI3MTg1MTc1MDg0ZmEiLCJpYXQiOjE2OTE3MzkzODR9.LDAwHq0VLod4ihOH3mh3N66G-2E0FtODvjluFeJ5t00
 ### FLASK API TEST
 
 POST http://localhost:5000/api/createSummarize

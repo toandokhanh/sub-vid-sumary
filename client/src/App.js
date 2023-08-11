@@ -10,6 +10,8 @@ import Auth from './views/Auth';
 import Home from './components/Home/Home';
 import Dashboard from './components/Dashboard/Dashboard';
 import About from './components/About/about';
+import History from './components/History/History';
+import Detail from './components/Detail/Detail';
 import AuthContextProvider from './contexts/authContext';
 import ProtectedRoute from './components/routing/ProtectedRoute'
 const App = () => {
@@ -22,6 +24,8 @@ const App = () => {
           <Route exact path='/register' element={<Auth authRoute='register'/>}/>
           <Route exact path='/dashboard' element={<ProtectedRoute component={Dashboard} />}/>
           <Route exact path='/about' element={<ProtectedRoute component={About} />}/>
+          <Route exact path='/history' element={<ProtectedRoute component={History} />}/>
+          <Route exact path='/detail/:id' element={<ProtectedRoute component={Detail} />}/>
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
