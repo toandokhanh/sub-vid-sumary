@@ -14,7 +14,7 @@ def summarize():
     sentence = data.get('sentence')
 
     # Gọi script Python từ Flask
-    command = f'python3 recognize_final.py -l {language} -video ../public/video/{video} -noise {noise} -summary {summary} -sentence {sentence}'
+    command = f'python3 recognize_final.py -l {language} -video ../public/videos/{video} -noise {noise} -summary {summary} -sentence {sentence}'
     output = subprocess.check_output(command, shell=True, text=True).strip()
     result_list = output.split(', ')
     keys = [

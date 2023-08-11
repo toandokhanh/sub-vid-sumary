@@ -14,7 +14,7 @@ import { AuthContext } from '../contexts/authContext'
 import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
-
+import {Link} from 'react-router-dom'
 
 
 const Auth = ({authRoute}) => {
@@ -47,10 +47,12 @@ const Auth = ({authRoute}) => {
         <MDBContainer fluid className='p-5 w-75'>
           <MDBRow>
             <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>
+              <Link style={{ textDecoration: 'none', color: '#000000' }} to='/'>
               <h1 className="my-5 display-3 fw-bold ls-tight px-3">
                 Create quality text<br />
                 <span className="text-primary">for your videos</span>
               </h1>
+              </Link>
               <p className='px-3' style={{color: 'hsl(217, 10%, 50.8%)'}}>
               The site provides tools and functions to automatically classify, summarize, and generate captions based on word processing. 
               With the features it offers, you can reap benefits for your
