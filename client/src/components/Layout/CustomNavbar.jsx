@@ -26,6 +26,7 @@ const CustomNavbar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/about">About</Nav.Link>
+            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/history">History</Nav.Link>
             <Nav.Link style={{ color: "#ffffff" }} href="https://github.com/toandokhanh/TextVidSummarizer" target="_blank">Github</Nav.Link>
             <Dropdown>
               <Dropdown.Toggle style={{ backgroundColor: "#563D7C", border: 'none', marginTop: '2px' }} id="user-dropdown">
@@ -36,7 +37,7 @@ const CustomNavbar = () => {
                 <Dropdown.Divider />
                 <Dropdown.Item>Video narration</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item>Categorize topics and summarize Video</Dropdown.Item>
+                <Dropdown.Item as={Link} to='/dashboard'>Categorize topics and summarize Video</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Nav>

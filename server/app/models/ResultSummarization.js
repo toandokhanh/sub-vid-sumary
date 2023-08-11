@@ -14,11 +14,13 @@ const ResultSummarizationSchema = new mongoose.Schema({
   }, 
   sentenceCountInput: { type: Number},
   wordCountInput: { type: Number},
-  sentenceCountOutnput: { type: Number},
-  wordCountOutnput: { type: Number},
+  sentenceCountOutput: { type: Number},
+  wordCountOutput: { type: Number},
   processing_time: { type: Number},
   path_text: {type: String},
   path_text_summary: {type: String},
+  input_text: {type: String},
+  output_text: {type: String},
   predict_text_classification: {type: String},
   rouge1: {
     recall: {

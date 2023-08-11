@@ -34,8 +34,8 @@ Content-Type: application/json
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 {
-  "video": "7.mp4",
-  "language": "en",
+  "video": "10.mp4",
+  "language": "vi",
   "noise": "deep",
   "summary": "kl",
   "sentence": 2
@@ -43,14 +43,12 @@ Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 ### Get Videos All
 
-GET http://localhost:6000/api/video/getallvideo
+GET http://localhost:5000/api/video/getallvideo
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
-
 ### Get video details
 
-GET http://localhost:6000/api/video/getvideodetail/20230730_083504
+GET http://localhost:5000/api/video/getvideodetail/20230811_152201
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
-
 ### FLASK API TEST
 
 POST http://localhost:5000/api/createSummarize
