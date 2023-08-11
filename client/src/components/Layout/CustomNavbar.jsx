@@ -35,7 +35,8 @@ const CustomNavbar = () => {
               <Dropdown.Menu>
                 <Dropdown.Item>Video subtitles</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item>Video narration</Dropdown.Item>
+                <Dropdown.Item>Video narration</Dropdown.Item> 
+                
                 <Dropdown.Divider />
                 <Dropdown.Item as={Link} to='/dashboard'>Categorize topics and summarize Video</Dropdown.Item>
               </Dropdown.Menu>
