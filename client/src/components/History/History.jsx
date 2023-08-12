@@ -46,7 +46,7 @@ const History = () => {
                 <td>{video.createdAt}</td>
                 <td>{video.updatedAt}</td>
                 <td style={{ paddingLeft: '15px', cursor: 'pointer' }}>
-                <Link style={{ color: '#000000' }} to={`/detail/${video.date_time}`}><FaRegFileAlt/></Link>
+                <Link style={{ color: '#000000' }} to={`/video/summary/detail/${video.date_time}`}><FaRegFileAlt/></Link>
                 </td>
               </tr>
             ))}

@@ -12,7 +12,7 @@ const CustomNavbar = () => {
   return (
     <Navbar className='nav' expand="lg" style={{ backgroundColor: "#563D7C" }}>
       <Container>
-        <Navbar.Brand style={{ color: "#ffffff" }} as={Link} to="/dashboard">
+        <Navbar.Brand style={{ color: "#ffffff" }} as={Link} to="/summary">
         <img
           src={logo}
           alt={fullname}
@@ -33,12 +33,11 @@ const CustomNavbar = () => {
                 Services
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item>Video subtitles</Dropdown.Item>
+                <Dropdown.Item as={Link} to='/'>Video subtitles</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item>Video narration</Dropdown.Item> 
-                
                 <Dropdown.Divider />
-                <Dropdown.Item as={Link} to='/dashboard'>Categorize topics and summarize Video</Dropdown.Item>
+                <Dropdown.Item as={Link} to='/summary'>Categorize topics and summarize Video</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Nav>

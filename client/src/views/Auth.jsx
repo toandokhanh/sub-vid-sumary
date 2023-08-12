@@ -34,7 +34,7 @@ const Auth = ({authRoute}) => {
           <Spinner animation='border' variant='info'/> 
         </div>
       )
-  else if (isAuthenticated) return <Navigate to='/dashboard'/>
+  else if (isAuthenticated) return <Navigate to='/summary'/>
   else
     body = (
       <>

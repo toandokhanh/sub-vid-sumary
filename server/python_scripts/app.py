@@ -26,6 +26,11 @@ def summarize():
 
     result_dict = dict(zip(keys, result_list))
     return jsonify(result_dict)
+
+@app.route('/api/createSubtitle', methods=['POST'])
+def subtitle():
+   
+    return 0
 if __name__ == '__main__':
     app.run(port=6000) 
     app.run(debug=True)

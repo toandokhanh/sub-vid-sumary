@@ -81,7 +81,7 @@ function Dashboard() {
       if (response.data.success) {
         console.log(response.data.newVideo.date_time);
         setLoading(false);
-        navigate('/detail/'+response.data.newVideo.date_time);
+        navigate('video/summary/detail/'+response.data.newVideo.date_time);
       }
     } catch (error) {
       console.error('Error:', error);
