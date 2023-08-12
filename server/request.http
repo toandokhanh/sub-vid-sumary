@@ -11,10 +11,10 @@ POST http://localhost:5000/api/auth/register
 content-type: application/json
 
 {
-  "firstname": "an",
-  "lastname": "an",
-  "username": "an",
-  "password": "an"
+  "firstname": "hat",
+  "lastname": "hat",
+  "username": "hat",
+  "password": "hat"
 }
 
 ### LOGIN
