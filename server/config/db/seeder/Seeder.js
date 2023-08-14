@@ -30,7 +30,7 @@ const dataTextSummarization = [
   },
   {
     id: 'luhn',
-    name: 'Giải thuật LSA ',
+    name: 'Giải thuật LUHN ',
   },
   {
     id: 'random',
@@ -43,6 +43,10 @@ const dataTextSummarization = [
   {
     id: 'edmundson',
     name: 'Giải thuật Edmundson ',
+  },
+  {
+    id: 'lsa',
+    name: 'Giải thuật LSA',
   },
   {
     id: 'kl',

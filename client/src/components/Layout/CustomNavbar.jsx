@@ -33,7 +33,7 @@ const CustomNavbar = () => {
                 Services
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item as={Link} to='/'>Video subtitles</Dropdown.Item>
+                <Dropdown.Item as={Link} to='/subtitle'>Video subtitles</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item>Video narration</Dropdown.Item> 
                 <Dropdown.Divider />

@@ -81,7 +81,7 @@ function Dashboard() {
       if (response.data.success) {
         console.log(response.data.newVideo.date_time);
         setLoading(false);
-        navigate('video/summary/detail/'+response.data.newVideo.date_time);
+        navigate('/video/summary/detail/'+response.data.newVideo.date_time);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -120,7 +120,7 @@ function Dashboard() {
         <Form.Group>
           <Form.Label>Source language (input)</Form.Label>
           <Form.Control as="select" value={sourceLanguage} onChange={handleLanguage}>
-            <option value="vi">Tiếng việt</option>
+            <option value="vi">Vietnamese</option>
             <option value="en">English</option>
           </Form.Control>
         </Form.Group>
