@@ -30,20 +30,20 @@ function Subtitle() {
     }
     try {
       const response = await axios.post(`${apiUrl}/upload/video`, formData);
-
       const videoForm = {
         video: videoName,
         sourceLanguage,
         targetLanguage,
         algorithm,
       };
+      console.log(videoForm)
+      setLoading(false);
+      // const createResponse = await axios.post(`${apiUrl}/video/create`, videoForm);
 
-      const createResponse = await axios.post(`${apiUrl}/video/create`, videoForm);
-
-      if (createResponse.data.success) {
-        setLoading(false);
-        navigate('/video/summary/detail/' + createResponse.data.newVideo.date_time);
-      }
+      // if (createResponse.data.success) {
+      //   setLoading(false);
+      //   navigate('/video/summary/detail/' + createResponse.data.newVideo.date_time);
+      // }
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);

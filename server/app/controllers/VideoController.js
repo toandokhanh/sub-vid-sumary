@@ -132,20 +132,17 @@ class VideoController{
                         if (!languageId) {
                             return res.status(400).json({ success: false, message: 'Language not found!' });
                         }
-                    
                         const newVideo = new Video({
                             date_time: dateTime,
                             path_video: pathVideo,
                             capacity: kb,
                             time: time,
-                            language: languageId,
+                            sourceLanguage: languageId,
                             user: req.userId,
                             resultSummarization: newResultSummarization._id,
                         });
-                    
-                        await newVideo.save();
-                    
-                        res.status(200).json({ success: true, message: 'Summary result created successfully', newVideo });
+                          await newVideo.save();
+                          res.status(200).json({ success: true, message: 'Summary result created successfully', newVideo });
                     } catch (error) {
                         console.error('Error accessing/reading files:', error);
                         res.status(500).json({ success: false, message: 'Server internal error' });

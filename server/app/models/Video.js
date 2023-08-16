@@ -5,9 +5,13 @@ const ObjectId = Schema.ObjectId;
 const videosSchema = new mongoose.Schema({
   date_time: {type: String, require: true ,unique: true},
   path_video: {type: String, require: true},
-  capacity: {type: Number, require: true},
-  time: {type: String, require: true},
-  language: {
+  capacity: {type: Number},
+  time: {type: String},
+  sourceLanguage: {
+    type: ObjectId,
+    ref: 'Language'
+  },
+  targetLanguage: {
     type: ObjectId,
     ref: 'Language'
   },
