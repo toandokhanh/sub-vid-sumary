@@ -5,6 +5,7 @@ const verifyToken = require('../app/middleware/auth');
 
 router.get('/getallvideo', verifyToken, VideoController.getAllVideo);//localhost:6000/api/video/getall
 router.get('/getvideodetail/:id', verifyToken, VideoController.getVideoDetail);//localhost:6000/api/video/getall
-router.post('/create', verifyToken, VideoController.create);//localhost:6000/api/video/create
+router.post('/create/summary', verifyToken, VideoController.createSummary);//localhost:6000/api/video/create/summary
+router.post('/create/subtitle', verifyToken, VideoController.createSubtitle);//localhost:6000/api/video/create/subtitle
 
 module.exports = router;

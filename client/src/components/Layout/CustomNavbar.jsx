@@ -12,7 +12,7 @@ const CustomNavbar = () => {
   return (
     <Navbar className='nav' expand="lg" style={{ backgroundColor: "#563D7C" }}>
       <Container>
-        <Navbar.Brand style={{ color: "#ffffff" }} as={Link} to="/summary">
+        <Navbar.Brand style={{ color: "#ffffff" }} as={Link} to="/">
         <img
           src={logo}
           alt={fullname}
@@ -20,15 +20,16 @@ const CustomNavbar = () => {
           height="30"
           className="d-inline-block align-top rounded-circle me-2"
         />
-        TextVidSummarizer
+        SubVidSumary
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/about">About</Nav.Link>
-            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/history">History</Nav.Link>
+            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/subtitle">Subtitles</Nav.Link>
+            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/summary">Summary</Nav.Link>
             <Nav.Link style={{ color: "#ffffff" }} href="https://github.com/toandokhanh/TextVidSummarizer" target="_blank">Github</Nav.Link>
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle style={{ backgroundColor: "#563D7C", border: 'none', marginTop: '2px' }} id="user-dropdown">
                 Services
               </Dropdown.Toggle>
@@ -39,7 +40,7 @@ const CustomNavbar = () => {
                 <Dropdown.Divider />
                 <Dropdown.Item as={Link} to='/summary'>Categorize topics and summarize Video</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </Nav>
           <Nav>
             <Dropdown>
@@ -55,6 +56,10 @@ const CustomNavbar = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item>User Info</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item as={Link} to="/history/summary">Your summary</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item as={Link} to="/history/subtitle">Your subtitle</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
               </Dropdown.Menu>

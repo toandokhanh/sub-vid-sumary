@@ -2,6 +2,7 @@ const Video = require('../models/Video')
 const ResultSummarization = require('../models/ResultSummarization')
 const NoiseReduction = require('../models/NoiseReduction')
 const TextSummarization = require('../models/TextSummarization')
+const ResultSubtitle = require('../models/ResultSubtitle')
 const Language = require('../models/Language')
 const request = require('request')
 const fs = require('fs');
@@ -45,9 +46,14 @@ class VideoController{
                     .status(400)
                     .json({ success: false, message: 'Detailed video not found' }) 
             const videoResult = await ResultSummarization.findOne({ _id: video.resultSummarization});
+            if(!videoResult)
+                return res
+                        .status(400)
+                        .json({ success: false, message: 'Result not found!' })
+
             const NoiseReductionId = await NoiseReduction.findOne({ _id: videoResult.noiseReduction });
             const TextSummarizationId = await TextSummarization.findOne({ _id: videoResult.textSummarization});
-            if (!videoResult || !NoiseReductionId || !TextSummarizationId)
+            if (!NoiseReductionId || !TextSummarizationId)
                 return res
                     .status(400)
                     .json({ success: false, message: 'Result not found!' })
@@ -60,7 +66,78 @@ class VideoController{
                     res.status(500).json({success: false, message:'Internal Server Error'});
         }
     };
-    async create(req, res) {
+
+
+
+    async createSubtitle(req, res) {
+        const { video,
+            sourceLanguage,
+            targetLanguage,
+            algorithm } = req.body;
+        // Simple validation
+        if (!video || !sourceLanguage || !targetLanguage || !algorithm)
+        return res
+            .status(400)
+            .json({ success: false, message: 'Lack of information' });
+        // call FLASK API (app.py) 
+        const dataToSend = req.body;
+        const apiUrl = process.env.FLASKAPI_URL; 
+        request.post(
+            {
+                url: apiUrl+'/createSubtitle',
+                json: dataToSend
+            },
+            async (error, response, body) => {
+                if (error) {
+                    console.error('Error while calling API FLASK:', error);
+                    res.status(500).json({ success: false, message: 'Server internal error' });
+                } else {
+                    const {algorithm, dateTime, emty, kb, outputVideoPath,outputWavPath, processingTime, sourceLanguage, srtPath, targetLanguage, time, txtPath, videoPath, wavPath} = body;
+                    // tìm thuât toán giảm nhiểu
+                    try {
+                        const algorithmId = await NoiseReduction.findOne({id: algorithm})
+                        const sourceLanguageId = await Language.findOne({ id: sourceLanguage });
+                        const targetLanguageId = await Language.findOne({ id: targetLanguage });
+                        if (!algorithmId || !sourceLanguageId || !targetLanguageId)
+                            return res
+                                .status(400)
+                                .json({ success: false, message: 'Sevice not found!' })
+
+                        const newResultSubtitle = new ResultSubtitle({
+                            noiseReduction: algorithmId,
+                            wavPath,
+                            outputWavPath,
+                            outputVideoPath,
+                            processingTime,
+                            txtPath,
+                            srtPath
+                        })
+                        await newResultSubtitle.save();
+
+                        const newVideo = new Video({
+                            date_time: dateTime,
+                            path_video: videoPath,
+                            capacity: kb,
+                            time: time,
+                            sourceLanguage: sourceLanguageId,
+                            targetLanguage: targetLanguageId,
+                            user: req.userId,
+                            resultSummarization:newResultSubtitle._id
+                        });
+                        await newVideo.save();
+                        res.status(200).json({ success: true, message: 'Video Subtitle created successfully', newVideo });
+                    } catch (error) {
+                        console.error('Error accessing/reading files:', error);
+                        res.status(500).json({ success: false, message: 'Server internal error' });
+                    }
+
+                }   
+            });
+    };
+
+
+
+    async createSummary(req, res) {
         const { video, language, noise, summary, sentence } = req.body;
         
         // Simple validation
@@ -74,7 +151,7 @@ class VideoController{
         const apiUrl = process.env.FLASKAPI_URL; 
         request.post(
             {
-                url: apiUrl,
+                url: apiUrl+'/createSummarize',
                 json: dataToSend
             },
             async (error, response, body) => {

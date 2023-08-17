@@ -12,7 +12,21 @@ function Subtitle() {
   const [algorithm, setAlgorithm] = useState('no');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const spinnerStyle = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    padding: '10px',
+    borderRadius: '5px',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
   const handleVideoFile = (e) => {
     setVideoFile(e.target.files[0]);
     setVideoName(e.target.files[0].name);
@@ -28,26 +42,29 @@ function Subtitle() {
       setLoading(false);
       return;
     }
+    // call API save video file
+    fetch(`${apiUrl}/upload/video`, {
+      method: 'POST',
+      body: formData,
+    });
+    // call API create summary text
+    const videoForm = {
+      video: videoName,
+      sourceLanguage,
+      targetLanguage,
+      algorithm,
+    };
     try {
-      const response = await axios.post(`${apiUrl}/upload/video`, formData);
-      const videoForm = {
-        video: videoName,
-        sourceLanguage,
-        targetLanguage,
-        algorithm,
-      };
-      console.log(videoForm)
-      setLoading(false);
-      // const createResponse = await axios.post(`${apiUrl}/video/create`, videoForm);
-
-      // if (createResponse.data.success) {
-      //   setLoading(false);
-      //   navigate('/video/summary/detail/' + createResponse.data.newVideo.date_time);
-      // }
+      const response = await axios.post(`${apiUrl}/video/create/subtitle`, videoForm);
+      if (response.data.success) {
+        console.log(response.data.newVideo.date_time);
+        setLoading(false);
+        navigate('/video/subtitle/detail/'+response.data.newVideo.date_time);
+      }
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);
-    }
+    } 
   };
 
   return (
@@ -73,14 +90,9 @@ function Subtitle() {
             <Form.Group>
             <Form.Label>Target language</Form.Label>
             <Form.Control as="select" value={targetLanguage} onChange={(e) => setTargetLanguage(e.target.value)}>
-                <option value="en">Vietnamese</option>
-                <option value="vi">English</option>
+                <option value="vi">Vietnamese</option>
+                <option value="en">English</option>
             </Form.Control>
-            </Form.Group>
-
-            <Form.Group>
-            <Form.Label>Video name</Form.Label>
-            <Form.Control type="text" value={videoName} onChange={(e) => setVideoName(e.target.value)} required />
             </Form.Group>
 
             <Form.Group>
@@ -97,7 +109,7 @@ function Subtitle() {
             </Button>
         </Form>
         {loading && (
-            <div className="loading-overlay">
+            <div className="loading-overlay" style={spinnerStyle}>
             <Spinner animation="border" variant="info" />
             </div>
         )}
