@@ -31,9 +31,9 @@ from googletrans import Translator
 from gingerit.gingerit import GingerIt
 from pyvi import ViTokenizer
 from nltk.tokenize import sent_tokenize
-import handle.handle_save_log as handle_save_log #handle_save_log.py
-from handle.handle_save_log import read_video_info
-from handle.handle_save_log import count_sentence
+import utils.handle_save_log as handle_save_log #handle_save_log.py
+from utils.handle_save_log import read_video_info
+from utils.handle_save_log import count_sentence
 import accuracy
 from accuracy import calculate_ROUGE
 
