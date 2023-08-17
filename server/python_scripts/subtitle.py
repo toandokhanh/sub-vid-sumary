@@ -1,11 +1,9 @@
 import argparse
 import os,sys
-import createsub
-
+import subtitle.createsub as createsub
 from regex import F
 from datetime import datetime
-from srtToTxt import srt_to_txt
-
+import utils.srtToTxt as srt_to_txt
 import noisereduce as nr
 import soundfile as sf
 import librosa
