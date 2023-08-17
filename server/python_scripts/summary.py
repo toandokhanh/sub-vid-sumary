@@ -12,15 +12,15 @@ import ffmpeg
 import requests
 import soundfile as sf
 import re
-import summary.sumy_final as sumy_final # sumy_final.py
-from summary.sumy_final import lexrank_summarize
-from summary.sumy_final import textrank_summarize
-from summary.sumy_final import lsa_summarize
-from summary.sumy_final import luhn_summarize
-from summary.sumy_final import edmundson_summarize
-from summary.sumy_final import random_summarize
-from summary.sumy_final import reduction_summarize
-from summary.sumy_final import kl_summarize
+import text_sumy as text_sumy # text_sumy.py
+from text_sumy import lexrank_summarize
+from text_sumy import textrank_summarize
+from text_sumy import lsa_summarize
+from text_sumy import luhn_summarize
+from text_sumy import edmundson_summarize
+from text_sumy import random_summarize
+from text_sumy import reduction_summarize
+from text_sumy import kl_summarize
 from glob import glob
 from noisereduce.generate_noise import band_limited_noise
 from regex import F

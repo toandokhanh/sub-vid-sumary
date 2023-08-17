@@ -27,7 +27,7 @@ function Dashboard() {
     borderRadius: '5px',
     height: '100%',
     width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     margin: '0 auto',
     display: 'flex',
     justifyContent: 'center',
@@ -77,7 +77,7 @@ function Dashboard() {
       'sentence':summarySentences 
     } 
     try {
-      const response = await axios.post(`${apiUrl}/video/create`, videoForm);
+      const response = await axios.post(`${apiUrl}/video/create/summary`, videoForm);
       if (response.data.success) {
         console.log(response.data.newVideo.date_time);
         setLoading(false);
@@ -95,11 +95,9 @@ function Dashboard() {
     )
   }else{
     body = (
-      body = (
-        <div style={spinnerStyle}>
-          <Spinner animation='border' variant='info'/> 
-        </div>
-      )
+      <div style={spinnerStyle}>
+        <Spinner animation='border' variant='info'/> 
+      </div>
     )
   }
   

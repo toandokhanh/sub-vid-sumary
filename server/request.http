@@ -34,31 +34,67 @@ Content-Type: application/json
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 {
-  "video": "10.mp4",
-  "language": "vi",
+  "video": "1.mp4",
+  "language": "en",
   "noise": "deep",
-  "summary": "kl",
+  "summary": "lsa",
   "sentence": 2
 }
+### CREATE A NEW VIDEO SUBTITLE
 
+POST http://localhost:5000/api/video/create/subtitle
+Content-Type: application/json
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
+{
+  "video": "3.mp4",
+  "sourceLanguage": "vi", 
+  "targetLanguage": "vi",
+  "algorithm": "noise",
+}
 ### Get Videos All
 
 GET http://localhost:5000/api/video/getallvideo
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 ### Get video details
 
-GET http://localhost:5000/api/video/getvideodetail/20230811_152201
+GET http://localhost:5000/api/video/getvideodetail/20230816_161117
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
-### FLASK API TEST
+### FLASK API TEST SUMMARY
 
-POST http://localhost:5000/api/createSummarize
+POST http://localhost:6000/api/createSummarize
 Content-Type: application/json
 
 {
-  "video": "7.mp4",
+  "video": "1.mp4",
   "language": "vi",
   "noise": "noise",
   "summary": "textrank",
   "sentence": 2
 }
 
+
+### FLASK API TEST SUBTITLE
+
+POST http://localhost:6000/api/createSubtitle
+Content-Type: application/json
+
+{
+  "video": "3.mp4",
+  "sourceLanguage": "vi", 
+  "targetLanguage": "vi",
+  "algorithm": "noise"
+}
+
+### sdsfsfdsffds
+
+POST http://localhost:5000/api/video/create/subtitle
+Content-Type: application/json
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
+{
+  "video": "3.mp4",
+  "sourceLanguage": "vi", 
+  "targetLanguage": "vi",
+  "algorithm": "noise"
+}

@@ -27,7 +27,7 @@ const App = () => {
           <Route exact path='/summary' element={<ProtectedRoute component={Summary} />}/>
           <Route exact path='/subtitle' element={<ProtectedRoute component={Subtitle} />}/>
           <Route exact path='/about' element={<ProtectedRoute component={About} />}/>
-          <Route exact path='/history' element={<ProtectedRoute component={History} />}/>
+          <Route exact path='/history/summary' element={<ProtectedRoute component={History} />}/>
           <Route exact path='/video/summary/detail/:id' element={<ProtectedRoute component={SummaryDetail} />}/>
           <Route exact path='/video/subtitle/detail/:id' element={<ProtectedRoute component={SubtitleDetail} />}/>
         </Routes>
