@@ -50,7 +50,7 @@ Follow these steps to set up and run the project locally on your machine:
 The general procedure to reduce noise and create subtitles for videos, as shown in the image above, includes the following steps. First, we collect videos for testing. Then we use the FFmpeg Library to extract the audio from the video files. Next, to enhance the subtitle generator, we choose DeepFilterNet (Schroter2022) or Noisereduce (Sainburg2020) to remove the noise in the audio files. We then convert the audio file format from WAV to FLAC to comply with the Speech-to-Text API requirements. Finally, we evaluate the similarity between the generated subtitles and the original text. In addition, we perform voice-based gender classification to support voiced videos for further processing.
 
 detail: https://github.com/toandokhanh/VidSubWizard
-# Summary
+# Summarize and auto-categorize
 The internet's continuous development has led to a rise in the number of videos available online. Efficient organization and categorization based on content are important. Automatic identification of main themes in videos and text processing tasks like extraction, summarization, captions/subtitles, and sentiment analysis have growing applications. These tasks aid searchability, accessibility, and research purposes. Classifying videos by topic facilitates trend analysis and user behavior study. This paper will discuss current methods, challenges, and opportunities in video topic classification and text processing.
 
 Detail: https://github.com/toandokhanh/Text-BasedVideoSummarizer
