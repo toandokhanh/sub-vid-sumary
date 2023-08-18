@@ -18,7 +18,7 @@ const Detail = () => {
   const [detailResult, setDetailResult] = useState(null);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/video/getvideodetail/${params.id}`)
+    axios.get(`${apiUrl}/video/get/summary/detail/${params.id}`)
       .then((response) => {
         setDetailResult(response.data);
         console.log(response.data);

@@ -50,15 +50,20 @@ Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
   "video": "3.mp4",
   "sourceLanguage": "vi", 
   "targetLanguage": "vi",
-  "algorithm": "noise",
+  "algorithm": "noise"
 }
 ### Get Videos All
 
 GET http://localhost:5000/api/video/getallvideo
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
-### Get video details
 
-GET http://localhost:5000/api/video/getvideodetail/20230816_161117
+
+### Get video summary details
+GET http://localhost:5000/api/video/get/summary/detail/20230816_161117
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
+
+### Get video subtitle details
+GET http://localhost:5000/api/video/get/subtitle/detail/20230818_0256
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 ### FLASK API TEST SUMMARY
 

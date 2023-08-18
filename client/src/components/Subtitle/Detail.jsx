@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
 import { MDBBtn } from 'mdb-react-ui-kit';
 import CustomNavbar from '../Layout/CustomNavbar'
+import { useParams } from 'react-router-dom';
+import { apiUrl } from '../../contexts/constant';
+import axios from 'axios';
 import '../../App.css'
-function SubtitleEditor() {
+function SubtitleDetail() {
+  const params = useParams();
   const [subtitles, setSubtitles] = useState([
     // Initialize subtitles data here
   ]);
-
+  const [detailResult, setDetailResult] = useState();
+  
+  useEffect(() => {
+    axios.get(`${apiUrl}/video/get/summary/detail/${params.id}`)
+      .then((response) => {
+        setDetailResult(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
   const handleAddSubtitle = () => {
     const newSubtitle = {
       start_time: '00:00:00,000',
@@ -174,4 +189,4 @@ function SubtitleEditor() {
   );
 }
 
-export default SubtitleEditor;
+export default SubtitleDetail;
