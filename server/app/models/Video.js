@@ -23,7 +23,7 @@ const videosSchema = new mongoose.Schema({
     type: ObjectId,
     ref: 'ResultSummarization'
   },
-  ResultSubtitle: {
+  resultSubtitle: {
     type: ObjectId,
     ref: 'ResultSubtitle'
   },
