@@ -25,7 +25,6 @@ const CustomNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/about">About</Nav.Link>
             <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/subtitle">Subtitles</Nav.Link>
             <Nav.Link style={{ color: "#ffffff" }} as={Link} to="/summary">Summary</Nav.Link>
             <Nav.Link style={{ color: "#ffffff" }} href="https://github.com/toandokhanh/TextVidSummarizer" target="_blank">Github</Nav.Link>

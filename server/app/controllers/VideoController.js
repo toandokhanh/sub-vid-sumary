@@ -20,18 +20,55 @@ class VideoController{
         //     })
         //     .catch(error);
     }
-    async getAllVideo(req, res){
-        const videoAll = await Video.find({ user: req.userId  });
-        //simple validation
-        if (!videoAll)
+    async getSummaryVideoAll(req, res) {
+        try {
+            const videoAll = await Video.find({ 
+                user: req.userId, 
+                resultSummarization: { $exists: true }  // Tìm các video có trường resultSummarization tồn tại
+            });
+    
+            // Simple validation
+            if (!videoAll || videoAll.length === 0) {
+                return res
+                    .status(404)
+                    .json({ success: false, message: 'No videos with summarization results found!' });
+            }
+    
             return res
-                .status(400)
-                .json({ success: false, message: 'Video not found!' })
-        return res
-            .status(200)
-            .json({ success: true, message: 'ok', videoAll })
-    };
+                .status(200)
+                .json({ success: true, message: 'OK', videoAll });
+        } catch (error) {
+            console.error('Error fetching summarized videos:', error);
+            return res
+                .status(500)
+                .json({ success: false, message: 'Internal server error' });
+        }
+    }
 
+    async getSubtitleVideoAll(req, res) {
+        try {
+            const videosWithResultSubtitle = await Video.find({ 
+                user: req.userId, 
+                resultSubtitle: { $exists: true }  // Tìm các video có trường resultSubtitle tồn tại
+            });
+    
+            // Simple validation
+            if (!videosWithResultSubtitle || videosWithResultSubtitle.length === 0) {
+                return res
+                    .status(404)
+                    .json({ success: false, message: 'No videos with subtitles found!' });
+            }
+    
+            return res
+                .status(200)
+                .json({ success: true, message: 'OK', videosWithResultSubtitle });
+        } catch (error) {
+            console.error('Error fetching videos with subtitles:', error);
+            return res
+                .status(500)
+                .json({ success: false, message: 'Internal server error' });
+        }
+    }
     async getVideoSubtitleDetail(req, res) {
         const videoId = req.params.id
         if (!videoId)
@@ -51,15 +88,14 @@ class VideoController{
                         .json({ success: false, message: 'Result subtitle not found!' })
 
             const NoiseReductionId = await NoiseReduction.findOne({ _id: videoResult.noiseReduction });
-            const TextSummarizationId = await TextSummarization.findOne({ _id: videoResult.textSummarization});
-            if (!NoiseReductionId || !TextSummarizationId)
+            if (!NoiseReductionId)
                 return res
                     .status(400)
-                    .json({ success: false, message: 'Result not found!' })
+                    .json({ success: false, message: 'NoiseReduction not found!' })
             // all good
             return res
                 .status(200)
-                .json({ success: true, message: 'ok' , result:videoResult, NoiseReductionName: NoiseReductionId.name,TextSummarizationName: TextSummarizationId.name})
+                .json({ success: true, message: 'ok' , result:videoResult, NoiseReductionName: NoiseReductionId.name})
         } catch (error) {
             console.log(error);
                     res.status(500).json({success: false, message:'Internal Server Error'});

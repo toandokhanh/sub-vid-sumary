@@ -4,3 +4,4 @@ export const apiUrl =
 		: 'URLPUBLIC';
 
 export const LOCAL_STORAGE_TOKEN_NAME = 'video'
+export const SUBTITLE_FILE_API = 'http://localhost:5000/videos'

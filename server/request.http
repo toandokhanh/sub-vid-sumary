@@ -52,18 +52,23 @@ Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
   "targetLanguage": "vi",
   "algorithm": "noise"
 }
+
 ### Get Videos All
 
-GET http://localhost:5000/api/video/getallvideo
+GET http://localhost:5000/api/video/getallvideo/subtitle
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
+### Get Videos All
+
+GET http://localhost:5000/api/video/getallvideo/summary
+Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 ### Get video summary details
-GET http://localhost:5000/api/video/get/summary/detail/20230816_161117
+GET http://localhost:5000/api/video/get/summary/detail/20230818_025617
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 
 ### Get video subtitle details
-GET http://localhost:5000/api/video/get/subtitle/detail/20230818_0256
+GET http://localhost:5000/api/video/get/subtitle/detail/20230818_035025
 Authorization: Bearer REPLACE_WITH_A_FRESH_LOGIN_TOKEN
 ### FLASK API TEST SUMMARY
 

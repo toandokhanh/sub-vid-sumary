@@ -1,20 +1,20 @@
 import React, { useState , useEffect} from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
-import { MDBBtn } from 'mdb-react-ui-kit';
 import CustomNavbar from '../Layout/CustomNavbar'
+import SubtitleFrom from './SubtitleFrom'
 import { useParams } from 'react-router-dom';
 import { apiUrl } from '../../contexts/constant';
+import { SUBTITLE_FILE_API } from '../../contexts/constant';
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import '../../App.css'
 function SubtitleDetail() {
+  const navigate = useNavigate();
   const params = useParams();
-  const [subtitles, setSubtitles] = useState([
-    // Initialize subtitles data here
-  ]);
   const [detailResult, setDetailResult] = useState();
   
   useEffect(() => {
-    axios.get(`${apiUrl}/video/get/summary/detail/${params.id}`)
+    axios.get(`${apiUrl}/video/get/subtitle/detail/${params.id}`)
       .then((response) => {
         setDetailResult(response.data);
         console.log(response.data);
@@ -23,168 +23,66 @@ function SubtitleDetail() {
         console.error(error);
       });
   }, []);
-  const handleAddSubtitle = () => {
-    const newSubtitle = {
-      start_time: '00:00:00,000',
-      end_time: '00:00:00,000',
-      text: '',
-    };
-    setSubtitles((prevSubtitles) => [...prevSubtitles, newSubtitle]);
-  };
+  
+  if (!detailResult) return <>
 
-  const handleDeleteSubtitle = (index) => {
-    setSubtitles((prevSubtitles) =>
-      prevSubtitles.filter((_, i) => i !== index)
-    );
-  };
-
-  const handleSubtitleChange = (index, field, value) => {
-    setSubtitles((prevSubtitles) => {
-      const newSubtitles = [...prevSubtitles];
-      newSubtitles[index][field] = value;
-      return newSubtitles;
-    });
-  };
-
-  const handleSubmit = (index, field, value) => {
-    console.log('Submit');
-  };
+  </>
+  const {outputVideoPath, outputWavPath, srtPath, txtPath, wavPath} = detailResult.result
   return (
     <>
     <CustomNavbar/>
     <br/>
+    <br/>
+    <br/>
         <div>
-            <div className="container" style={{ display: 'flex' , gap:'10px'}}>
-                <div className="left" >
+            <div className="container" style={{ display: 'flex'}}>
+                {/* <div className="left" >
                     <div id="wrapper" style={{ border: '3px solid black' }}>
-                        <Form>
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>Start time</th>
-                                <th>End time</th>
-                                <th>Text</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {subtitles.map((sub, index) => (
-                                <tr key={index}>
-                                <td>
-                                    <Form.Control
-                                    type="text"
-                                    value={sub.start_time}
-                                    onChange={(e) =>
-                                        handleSubtitleChange(index, 'start_time', e.target.value)
-                                    }
-                                    />
-                                </td>
-                                <td>
-                                    <Form.Control
-                                    type="text"
-                                    value={sub.end_time}
-                                    onChange={(e) =>
-                                        handleSubtitleChange(index, 'end_time', e.target.value)
-                                    }
-                                    />
-                                </td>
-                                <td style={{ position: 'relative' }}>
-                                    <Form.Control
-                                    as="textarea"
-                                    rows={4}
-                                    value={sub.text}
-                                    onChange={(e) =>
-                                        handleSubtitleChange(index, 'text', e.target.value)
-                                    }
-                                    required
-                                    />
-                                    <span
-                                    style={{
-                                        fontSize: '8px',
-                                        color: '#6244c5',
-                                        marginTop: '-100px',
-                                        position: 'absolute',
-                                        top: '143%',
-                                        left: '-380px',
-                                        cursor: 'pointer',
-                                        fontWeight: 700,
-                                    }}
-                                    >
-                                    {index + 1}
-                                    </span>
-                                    <span
-                                    style={{
-                                        fontSize: '8px',
-                                        color: '#6244c5',
-                                        marginTop: '-100px',
-                                        position: 'absolute',
-                                        top: '120%',
-                                        right: '-10px',
-                                        cursor: 'pointer',
-                                    }}
-                                    >
-                                    <i className="fa fa-plus fa-2x" onClick={handleAddSubtitle}></i>
-                                    </span>
-                                    <span
-                                    style={{
-                                        fontSize: '8px',
-                                        color: '#b93a3c',
-                                        marginTop: '-100px',
-                                        position: 'absolute',
-                                        top: '165%',
-                                        right: '-10px',
-                                        cursor: 'pointer',
-                                    }}
-                                    >
-                                    <i
-                                        className="fa fa-times fa-2x"
-                                        onClick={() => handleDeleteSubtitle(index)}
-                                    ></i>
-                                    </span>
-                                </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </Table>
-                        <Button
-                            variant="primary"
-                            style={{ margin: '0px 235px', backgroundColor: '#563D7C' }}
-                            onClick={handleSubmit}
-                        >
-                            Update subtitle
-                        </Button>
-                        <p></p>
-                        </Form>
                     </div>
-                </div>
-                <div className="right" >
-                <video
+                </div> */}
+                
+                <div className="left" >
+                <video className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
-                    width="760"
+                    width="700"
                     height="470"
                     controls
                 >
                     <source
-                    src="video_url"
+                    src={`${SUBTITLE_FILE_API}/${outputVideoPath}`}
                     type="video/mp4"
                     />
                 </video>
-                <MDBBtn
+                <div style={{ display: 'flex', gap:'20px', marginTop:'10px' }}>
+                <Button
                     className="change"
                     style={{
                     cursor: 'pointer',
                     backgroundColor: '#563D7C',
-                    color: '#ffffff',
+                    color: '#ffffff', 
                     }}
                     data-name="filename"
-                    data-nn="session['nn']"
                 >
-                    Switch to the original language
-                </MDBBtn>
+                    <a 
+                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                    href={`${SUBTITLE_FILE_API}/${srtPath}`}>
+                    Dowload SRT file
+                    </a>
+                </Button>
+                </div>
+                </div>
+                <div className="right">
+                <SubtitleFrom
+                  txtPath={`${SUBTITLE_FILE_API}/${txtPath}`}
+                  wavPath={`${SUBTITLE_FILE_API}/${wavPath}`}
+                  outputWavPath={`${SUBTITLE_FILE_API}/${outputWavPath}`}
+                />
                 </div>
             </div>
-            {/* You can include MDB React UI Kit styles and scripts here */}
             </div>
+            <br/>
+          
     </>
   );
 }

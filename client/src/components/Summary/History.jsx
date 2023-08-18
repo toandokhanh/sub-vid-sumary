@@ -6,10 +6,12 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table'; 
 import { FaRegFileAlt } from 'react-icons/fa';
 import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 const History = () => {
+  const navigate = useNavigate();
   const [result, setResult] = useState(null);
   useEffect(() => {
-    axios.get(`${apiUrl}/video/getallvideo`)
+    axios.get(`${apiUrl}/video/getallvideo/summary`)
       .then((response) => {
       setResult(response.data.videoAll);
       console.log(response.data.videoAll);
@@ -18,7 +20,25 @@ const History = () => {
       console.error(error);
     });
   }, []);
-  if (!result) return null;
+  if (!result) return <>
+    <CustomNavbar />
+    <div className="container mt-4">
+        <h3 style={{ textAlign:'center', margin:'30px 0' }}>You don't have a video summary yet</h3>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Video Name</th>
+              <th>Capacity</th>
+              <th>Time(s)</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Detail</th>
+            </tr>
+          </thead>
+          </Table>
+          </div>
+  </>;
   return (
     <>
         <CustomNavbar />
