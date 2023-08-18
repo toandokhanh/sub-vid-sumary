@@ -52,18 +52,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1Z
   "targetLanguage": "vi",
   "algorithm": "noise"
 }
+
 ### Get Videos All
 
-GET http://localhost:5000/api/video/getallvideo
+GET http://localhost:5000/api/video/getallvideo/subtitle
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1ZTRmODY0ODI3MTg1MTc1MDg0ZmEiLCJpYXQiOjE2OTE3MzkzODR9.LDAwHq0VLod4ihOH3mh3N66G-2E0FtODvjluFeJ5t00
 
+### Get Videos All
+
+GET http://localhost:5000/api/video/getallvideo/summary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1ZTRmODY0ODI3MTg1MTc1MDg0ZmEiLCJpYXQiOjE2OTE3MzkzODR9.LDAwHq0VLod4ihOH3mh3N66G-2E0FtODvjluFeJ5t00
 
 ### Get video summary details
-GET http://localhost:5000/api/video/get/summary/detail/20230816_161117
+GET http://localhost:5000/api/video/get/summary/detail/20230818_025617
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1ZTRmODY0ODI3MTg1MTc1MDg0ZmEiLCJpYXQiOjE2OTE3MzkzODR9.LDAwHq0VLod4ihOH3mh3N66G-2E0FtODvjluFeJ5t00
 
 ### Get video subtitle details
-GET http://localhost:5000/api/video/get/subtitle/detail/20230818_0256
+GET http://localhost:5000/api/video/get/subtitle/detail/20230818_035025
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ1ZTRmODY0ODI3MTg1MTc1MDg0ZmEiLCJpYXQiOjE2OTE3MzkzODR9.LDAwHq0VLod4ihOH3mh3N66G-2E0FtODvjluFeJ5t00
 ### FLASK API TEST SUMMARY
 

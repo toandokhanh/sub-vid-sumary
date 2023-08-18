@@ -9,7 +9,7 @@ function Footer() {
       <MDBContainer className="p-4">
         <MDBRow>
           <MDBCol lg="4" md="12" className="mb-4 mb-md-0">
-            <h5 className="text-uppercase">TextVidSummarizer</h5>
+            <h5 className="text-uppercase">SubVidSumary</h5>
             <p>
             This is an internship project of mine with the desire to help businesses have an automatic system of classifying and summarizing video content with natural language processing methods.
             </p>
@@ -44,7 +44,7 @@ function Footer() {
         </MDBRow>
       </MDBContainer>
       <div className="text-center p-3" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-        © {new Date().getFullYear()} TextVidSummarizer
+        © {new Date().getFullYear()} SubVidSumary
       </div>
     </MDBFooter>
   );
