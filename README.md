@@ -2,13 +2,16 @@
 
 # SubVidSumary
 This project is designed to provide a solution for generating accurate summaries and subtitles for videos based on advanced sound filtering and text processing techniques. The application combines the power of AI-driven audio analysis and natural language processing to create concise and engaging summaries that enhance video accessibility and viewer engagement.
+
+
+<!--
 </br>
 </br>
 <p align="center">
   <img src="https://github.com/toandokhanh/TextVidSummarizer/assets/98395447/9d2da01a-812e-4816-a5ac-54e3ecde9ef4" alt="Image" />
 </p>
 </br>
-
+ --->
 
 # Getting Started
 Follow these steps to set up and run the project locally on your machine:
