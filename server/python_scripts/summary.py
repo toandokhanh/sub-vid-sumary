@@ -1,3 +1,5 @@
+import subprocess
+import shlex
 
 import time
 import scipy.io.wavfile as wavfile
@@ -56,7 +58,7 @@ def get_arguments():
     return arguments
 
 def recognize(wav_filename, args):
-    
+
     data, s = librosa.load(wav_filename)
     # librosa.output.write_wav('tmp.wav', data, s)
     sf.write('tmp/tmp.wav', data, s)
@@ -65,7 +67,7 @@ def recognize(wav_filename, args):
 
     r = sr.Recognizer()
     with sr.AudioFile('tmp/tmp_32.wav') as source:
-        audio = r.record(source)  
+        audio = r.record(source)
 
     try:
         # https://pypi.org/project/SpeechRecognition/
@@ -76,11 +78,11 @@ def recognize(wav_filename, args):
     video_name = os.path.splitext(args.video)[0]
     with open( video_name +'_'+args.language+ '.txt', 'a', encoding='utf-8') as f:
         f.write(' {}'.format(result))
-    
+
 
 def get_audio(video):
-    os.system('ffmpeg -y  -threads 4 -i {} -f wav -ab 192000 -vn {}'.format(video, 'tmp/current.wav'))
-    
+    subprocess.run(shlex.split('ffmpeg -y  -threads 4 -i {} -f wav -ab 192000 -vn {}'.format(video, 'tmp/current.wav')), check=True, timeout=1800)
+
 # def get_audio(video, name_file):
 #     os.system('ffmpeg -y  -threads 4\
 #  -i {} -f wav -ab 192000 -vn {}'.format(video, name_file))
@@ -91,9 +93,9 @@ def split_into_frames(audiofile, args, folder='samples'):
         duration = librosa.get_duration(y=data, sr=sr)
     except:
         duration = librosa.get_duration(audiofile)
-    
+
     # tach moi file dai tam 50s
-    
+
     for i in range(0,int(duration-1),args.step_time):
         tmp_batch = data[(i)*sr:sr*(i+args.step_time)]
         # librosa.output.write_wav('samples/{}.wav'.format(chr(int(i/50)+65)), tmp_batch, sr)
@@ -117,9 +119,9 @@ def noise_reduce(file,file_out):
     sf.write(file_out,reduced_noise, sr, subtype='PCM_24')
 
 def noise_deepfilternet(file,file_out):
-    os.system('deepFilter {} -o {}'.format(file,file_out))
+    subprocess.run(shlex.split('deepFilter {} -o {}'.format(file, file_out)), check=True, timeout=1800)
 
-def rename(filename,newname): 
+def rename(filename,newname):
     os.rename(filename, newname)
 
 def punctuate_text(text, args):
@@ -160,7 +162,7 @@ def punctuate_text(text, args):
     # for sentence in sentences:
     #     corrected_sentence = ViTokenizer.tokenize(sentence)
     #     corrected_sentences.append(corrected_sentence)
-    
+
     with open( filepath +'_en_processed_text'+'.txt', 'w', encoding='utf-8') as file:
         for sentence in sentences:
             file.write(sentence + '\n')
@@ -177,7 +179,7 @@ def get_topic(text):
         if os.path.exists(video_name +'_'+args.language+'_vi.txt'):
             print("")
         else:
-            print("") 
+            print("")
     topic = '_'.join(classify(text_trans))
     return topic
 
@@ -211,7 +213,7 @@ def translate_text(text, src, dest):
 
 if __name__ == '__main__':
     from time import gmtime, strftime
-    time_text = str(strftime("%Y%m%d_%H%M%S", gmtime())) 
+    time_text = str(strftime("%Y%m%d_%H%M%S", gmtime()))
     folder = time_text
     # os.mkdir(folder)
     # os.mkdir(folder)
@@ -226,11 +228,11 @@ if __name__ == '__main__':
 
     # convert to audio file current
     split_into_frames('tmp/current.wav',args,folder)
-    
+
     # tra ve cac file wav nam trong thu muc tmp
     # files = sorted(glob('tmp/*.wav'))
     #files = sorted(glob('samples/*.wav'))
-    
+
     # files = sorted(glob( folder + '/*.wav'))
     files = sorted(glob( folder + '/*.wav'), key = os.path.getmtime)
     # tao file de luu phu de
@@ -264,8 +266,8 @@ if __name__ == '__main__':
                 for file in files:
                     recognize(file,args)
                 pass
-    
-    
+
+
     video_name = os.path.splitext(args.video)[0]
     file_path = video_name +'_'+args.language+'.txt'
 
@@ -274,7 +276,7 @@ if __name__ == '__main__':
         text = file.read()
     topic = get_topic(text)
     sumamary = args.algorithm_summary
-    
+
     if sumamary:
         if sumamary == 'lexrank':
             path_processed_text = punctuate_text(text, args)
@@ -309,19 +311,19 @@ if __name__ == '__main__':
             result_reduction = reduction_summarize(path_processed_text, args.extra_argument)
             save_result_to_file(result_reduction, args)
         else:
-            print('') 
+            print('')
 
     end = time.time()
     history_file = 'result/history.txt'
     if args.algorithm_summary == 'no':
         path_processed_text = 'None, None, None'
         path_processed_summary_text = 'None, None, None'
-    else:    
+    else:
         # day là file text đã xử lý (gốc)
         path_processed_text = video_name+'_en_processed_text'+'.txt'
         count_sentence_processed_text = count_sentence(path_processed_text)
         path_processed_text = path_processed_text+', '+count_sentence_processed_text
-        
+
         # day là file tóm tắt dùng để so sash với file gốc
         path_processed_summary_text = video_name +'_en_processed_text_'+args.algorithm_summary+'_summary.txt'
         count_sentence_summary_text = count_sentence(path_processed_summary_text)

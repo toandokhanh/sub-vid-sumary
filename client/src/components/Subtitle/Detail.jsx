@@ -12,7 +12,7 @@ function SubtitleDetail() {
   const navigate = useNavigate();
   const params = useParams();
   const [detailResult, setDetailResult] = useState();
-  
+
   useEffect(() => {
     axios.get(`${apiUrl}/video/get/subtitle/detail/${params.id}`)
       .then((response) => {
@@ -23,7 +23,7 @@ function SubtitleDetail() {
         console.error(error);
       });
   }, []);
-  
+
   if (!detailResult) return <>
 
   </>
@@ -40,9 +40,9 @@ function SubtitleDetail() {
                     <div id="wrapper" style={{ border: '3px solid black' }}>
                     </div>
                 </div> */}
-                
+
                 <div className="left" >
-                <video className='video'
+                <video crossOrigin="use-credentials" className='video'
                     id="my-video-player"
                     style={{ border: '3px solid black' }}
                     width="700"
@@ -60,12 +60,12 @@ function SubtitleDetail() {
                     style={{
                     cursor: 'pointer',
                     backgroundColor: '#563D7C',
-                    color: '#ffffff', 
+                    color: '#ffffff',
                     }}
                     data-name="filename"
                 >
-                    <a 
-                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}} 
+                    <a
+                    style={{color: '#ffffff', textDecoration:'none', marginTop:'20px'}}
                     href={`${SUBTITLE_FILE_API}/${srtPath}`}>
                     Dowload SRT file
                     </a>
@@ -82,7 +82,7 @@ function SubtitleDetail() {
             </div>
             </div>
             <br/>
-          
+
     </>
   );
 }

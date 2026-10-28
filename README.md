@@ -1,69 +1,44 @@
-<h6 align="left">Author: <a href="https://github.com/toandokhanh">Do Khanh Toan<a/> </h6>
+# Video subtitles and summaries
 
-# SubVidSumary
-This project is designed to provide a solution for generating accurate summaries and subtitles for videos based on advanced sound filtering and text processing techniques. The application combines the power of AI-driven audio analysis and natural language processing to create concise and engaging summaries that enhance video accessibility and viewer engagement.
+A 2023 academic application integrating video upload, noise reduction, speech recognition, subtitle generation and extractive summaries. It combines React, Express/MongoDB and a Python Flask worker.
 
+This is a historical academic prototype. The 2026 maintenance pass updates configuration, access checks and repository hygiene. The application has not been validated end to end with its original runtime and external services.
 
-<!--
-</br>
-</br>
-<p align="center">
-  <img src="https://github.com/toandokhanh/TextVidSummarizer/assets/98395447/9d2da01a-812e-4816-a5ac-54e3ecde9ef4" alt="Image" />
-</p>
-</br>
- --->
+## Structure and local setup
 
-# Getting Started
-Follow these steps to set up and run the project locally on your machine:
-1. fire up the Conda environment and run Flask(Python):
+- `client/`: React interface for authentication, processing jobs and result history.
+- `server/`: Express API, ownership checks, private upload-owner records and MongoDB models.
+- `server/python_scripts/`: subtitle and summarization pipelines.
+- `image/`: original interface screenshots.
 
-        conda create -n myenv
+Copy `server/.env.example` to `server/.env`. Configure local MongoDB and distinct random `ACCESS_TOKEN_SECRET` and `FLASK_SERVICE_TOKEN` values of at least 32 characters. The Flask worker reads the same file and accepts authenticated requests from Express. Set `GOOGLE_SPEECH_API_KEY` only for the legacy recognizer.
 
-        conda activate myenv
+After configuring the historical dependencies, original entry points are:
 
-        cd /server/python_scripts
+```sh
+# From server/
+npm run seed
+npm start
+# From server/, in another terminal
+python3 python_scripts/app.py
+# From client/, in another terminal
+npm start
+```
 
-        pip install -r requirements.txt
+The pipeline requires FFmpeg and, for the relevant option, DeepFilterNet. API keys, provider compatibility and the original audio environment have not been exercised during cleanup.
 
-        python3 app.py (RUN FLASK)
+Uploads require login, use generated filenames and are limited to 256 MiB. The client waits for upload completion before submitting a job. Result lookups are scoped to their owner. Sessions expire after one hour; an HttpOnly cookie supports protected media playback. Use `localhost` consistently in local frontend/backend URLs.
 
-2. Install project dependencies (NodeJS):
-        
-        cd /server
+## Research context
 
-        npm install
+The original summarization pipeline reports overlap against the source transcript. Those ROUGE numbers are not a benchmark against independent human-written summaries. Related work is documented in [Text-BasedVideoSummarizer](https://github.com/toandokhanh/Text-BasedVideoSummarizer) and [VidSubWizard](https://github.com/toandokhanh/vid-sub-wizard).
 
-        
-3. Seed initial data (if required):
+## Screenshots
 
-        npm run seed
-
-
-4. Seed initial data (if required):
-        
-        npm run start
-
-5. Start the React.js frontend (ReactJS):
-
-        cd /client
-
-        npm start
-
-# Subtitle 
-The general procedure to reduce noise and create subtitles for videos, as shown in the image above, includes the following steps. First, we collect videos for testing. Then we use the FFmpeg Library to extract the audio from the video files. Next, to enhance the subtitle generator, we choose DeepFilterNet (Schroter2022) or Noisereduce (Sainburg2020) to remove the noise in the audio files. We then convert the audio file format from WAV to FLAC to comply with the Speech-to-Text API requirements. Finally, we evaluate the similarity between the generated subtitles and the original text. In addition, we perform voice-based gender classification to support voiced videos for further processing.
-
-detail: https://github.com/toandokhanh/VidSubWizard
-# Summarize and auto-categorize
-The internet's continuous development has led to a rise in the number of videos available online. Efficient organization and categorization based on content are important. Automatic identification of main themes in videos and text processing tasks like extraction, summarization, captions/subtitles, and sentiment analysis have growing applications. These tasks aid searchability, accessibility, and research purposes. Classifying videos by topic facilitates trend analysis and user behavior study. This paper will discuss current methods, challenges, and opportunities in video topic classification and text processing.
-
-Detail: https://github.com/toandokhanh/Text-BasedVideoSummarizer
-
-
-# System Description
 ![Alt text](image/image-1.png)
 ![Alt text](image/image-2.png)
 ![Alt text](image/image-3.png)
 ![Alt text](image/image-4.png)
 ![Alt text](image/image-5.png)
-# License
-This project is licensed under the MIT License - see the LICENSE file for details.
+
+See [third-party notices](THIRD_PARTY_NOTICES.md). No repository-wide MIT license is claimed without an accompanying license file and verified rights for included components.

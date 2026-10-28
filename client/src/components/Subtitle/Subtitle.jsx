@@ -43,13 +43,15 @@ function Subtitle() {
       return;
     }
     // call API save video file
-    fetch(`${apiUrl}/upload/video`, {
-      method: 'POST',
-      body: formData,
+    const uploadResponse = await fetch(`${apiUrl}/upload/video`, {
+      method: 'POST', credentials: 'include', body: formData,
+      headers: { Authorization: axios.defaults.headers.common['Authorization'] || '' },
     });
+    if (!uploadResponse.ok) { setLoading(false); return; }
+    const uploaded = await uploadResponse.json();
     // call API create summary text
     const videoForm = {
-      video: videoName,
+      video: uploaded.fileName,
       sourceLanguage,
       targetLanguage,
       algorithm,
@@ -64,7 +66,7 @@ function Subtitle() {
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);
-    } 
+    }
   };
 
   return (

@@ -33,8 +33,8 @@ function Dashboard() {
     justifyContent: 'center',
     alignItems: 'center'
   };
-  
-  // handle video info 
+
+  // handle video info
   const handleVideoFile = (e) => {
     setVideoFile(e.target.files[0]);
     setVideoName(e.target.files[0].name)
@@ -51,7 +51,7 @@ function Dashboard() {
   const handleSummarySentences = (e) => {
     setSummarySentences(e.target.value);
   };
-   
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -64,18 +64,20 @@ function Dashboard() {
       return;
     }
     // call API save video file
-    fetch(`${apiUrl}/upload/video`, {
-        method: 'POST',
-        body: formData,
+    const uploadResponse = await fetch(`${apiUrl}/upload/video`, {
+      method: 'POST', credentials: 'include', body: formData,
+      headers: { Authorization: axios.defaults.headers.common['Authorization'] || '' },
     });
+    if (!uploadResponse.ok) { setLoading(false); return; }
+    const uploaded = await uploadResponse.json();
     // call API create summary text
     const videoForm = {
-      'video': videoName, 
-      'language':sourceLanguage, 
-      'noise':noiseReductionAlgorithm, 
-      'summary':textSummarization, 
-      'sentence':summarySentences 
-    } 
+      'video': uploaded.fileName,
+      'language':sourceLanguage,
+      'noise':noiseReductionAlgorithm,
+      'summary':textSummarization,
+      'sentence':summarySentences
+    }
     try {
       const response = await axios.post(`${apiUrl}/video/create/summary`, videoForm);
       if (response.data.success) {
@@ -86,7 +88,7 @@ function Dashboard() {
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);
-    } 
+    }
   };
   if(!loading){
     body = (
@@ -96,11 +98,11 @@ function Dashboard() {
   }else{
     body = (
       <div style={spinnerStyle}>
-        <Spinner animation='border' variant='info'/> 
+        <Spinner animation='border' variant='info'/>
       </div>
     )
   }
-  
+
   return (
     <>
       <CustomNavbar />
@@ -108,13 +110,13 @@ function Dashboard() {
       <div className='container-video'>
         <h2>Categorize topics and summarize Video</h2>
         <br/>
-        {alert === null ? null : <Alert variant='danger'>{alert}</Alert>} 
+        {alert === null ? null : <Alert variant='danger'>{alert}</Alert>}
         <Form onSubmit={handleSubmit} encType="multipart/form-data" className="index">
         <Form.Group>
           <Form.Label>Choose a file</Form.Label>
           <Form.Control type="file" name='file' onChange={handleVideoFile} required/>
         </Form.Group>
-  
+
         <Form.Group>
           <Form.Label>Source language (input)</Form.Label>
           <Form.Control as="select" value={sourceLanguage} onChange={handleLanguage}>
@@ -122,7 +124,7 @@ function Dashboard() {
             <option value="en">English</option>
           </Form.Control>
         </Form.Group>
-  
+
         <Form.Group>
           <Form.Label>Noise reduction algorithm</Form.Label>
           <Form.Control as="select" value={noiseReductionAlgorithm} onChange={handleNoiseReductionAlgorithm}>
@@ -131,7 +133,7 @@ function Dashboard() {
             <option value="noise">NoiseReduce</option>
           </Form.Control>
         </Form.Group>
-  
+
         <Form.Group>
           <Form.Label>Text summarization algorithm</Form.Label>
           <Form.Control as="select" value={textSummarization} onChange={handleTextSummarization}>
@@ -144,7 +146,7 @@ function Dashboard() {
             <option value="kl">Giải thuật KL-sum</option>
           </Form.Control>
         </Form.Group>
-  
+
         <Form.Group>
           <Form.Label>Summary sentences</Form.Label>
           <Form.Control

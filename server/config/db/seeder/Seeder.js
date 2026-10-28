@@ -1,3 +1,4 @@
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../../.env') });
 const mongoose = require('mongoose');
 const NoiseReduction = require('../../../app/models/NoiseReduction');
 const TextSummarization = require('../../../app/models/TextSummarization');
@@ -70,18 +71,18 @@ const dataLanguage = [
 async function seedModels() {
   try {
     await NoiseReduction.deleteMany();
-    await TextSummarization.deleteMany(); 
-    await Language.deleteMany(); 
+    await TextSummarization.deleteMany();
+    await Language.deleteMany();
 
-    const createdNoiseReductions = await NoiseReduction.create(dataNoiseReduction); 
+    const createdNoiseReductions = await NoiseReduction.create(dataNoiseReduction);
     const createdTextSummarizations = await TextSummarization.create(dataTextSummarization);
     const createdLanguage = await Language.create(dataLanguage);
 
     console.log('seeder created successfully');
-    process.exit(0); 
+    process.exit(0);
   } catch (error) {
     console.error('seeder created fail', error);
-    process.exit(1); 
+    process.exit(1);
   }
 }
 
@@ -92,6 +93,6 @@ mongoose
   })
   .then(() => {
     console.log('Connected to Mongoose successfully!');
-    seedModels(); 
+    seedModels();
   })
   .catch((error) => console.error('error', error));
