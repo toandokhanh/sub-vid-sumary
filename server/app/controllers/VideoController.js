@@ -5,7 +5,7 @@ const NoiseReduction = require('../models/NoiseReduction')
 const TextSummarization = require('../models/TextSummarization')
 const ResultSubtitle = require('../models/ResultSubtitle')
 const Language = require('../models/Language')
-const request = require('request')
+const workerClient = require('../../util/worker-client')
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
@@ -160,7 +160,7 @@ class VideoController{
                     return null;
                 }
             }
-            request.post(
+            workerClient.post(
                 {
                     url: apiUrl+'/createSubtitle', // Removed the extra "+" sign
                     headers: { 'X-Service-Token': process.env.FLASK_SERVICE_TOKEN },
@@ -262,7 +262,7 @@ class VideoController{
                 return null;
             }
         }
-        request.post(
+        workerClient.post(
             {
                 url: apiUrl+'/createSummarize',
                 headers: { 'X-Service-Token': process.env.FLASK_SERVICE_TOKEN },

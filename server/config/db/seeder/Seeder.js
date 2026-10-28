@@ -88,8 +88,6 @@ async function seedModels() {
 
 mongoose
   .connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
   })
   .then(() => {
     console.log('Connected to Mongoose successfully!');
